@@ -6,7 +6,7 @@ import ru.f0x.nutrients.validators.CorrectUpdateNutrient
 class UpdateNutrientDTO(
         override val id: Int,
         name: String,
-        manufacturer: String,
+        manufacturer: String?,
         carbohydrates: Float,
         proteins: Float,
         fats: Float,

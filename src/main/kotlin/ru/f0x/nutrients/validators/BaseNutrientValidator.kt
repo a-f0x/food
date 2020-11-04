@@ -13,9 +13,6 @@ abstract class BaseNutrientValidator<A : Annotation, DTO : NutrientDTO>(
         if (dto.name.isEmpty())
             errors["name"] = SHOULD_BE_NOT_EMPTY_MESSAGE
 
-        if (dto.manufacturer.isBlank())
-            errors["manufacturer"] = SHOULD_BE_NOT_EMPTY_MESSAGE
-
         if (dto.kilocalories <= 0)
             errors["address"] = String.format(SHOULD_BE_ABOVE_MESSAGE, 0)
         return successResultOrException(errors, dto)

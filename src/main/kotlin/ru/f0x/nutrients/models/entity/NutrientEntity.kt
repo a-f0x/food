@@ -13,7 +13,7 @@ class NutrientEntity {
     lateinit var name: String
 
     @Column(name = "manufacturer", nullable = false)
-    lateinit var manufacturer: String
+    var manufacturer: String = "Unknown"
 
     @Column(name = "carbohydrates", nullable = false)
     var carbohydrates: Float = 0.0f

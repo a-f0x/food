@@ -11,7 +11,9 @@ class NutrientMapper {
         return NutrientEntity().apply {
             id = dto.id ?: 0
             name = dto.name
-            manufacturer = dto.manufacturer
+            dto.manufacturer?.let {
+                manufacturer = it
+            }
             carbohydrates = dto.carbohydrates
             proteins = dto.proteins
             fats = dto.fats
