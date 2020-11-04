@@ -35,4 +35,15 @@ class NutrientService(
                     .map {
                         mapper.mapFromEntity(it)
                     }
+
+    override fun getAll(): List<NutrientDTO> = nutrientRepository.findAll().map { mapper.mapFromEntity(it) }
+
+    override fun update(nutrientDTO: NutrientDTO): NutrientDTO =
+            mapper.mapFromEntity(
+                    nutrientRepository.save(mapper.mapFromDTO(nutrientDTO))
+            )
+
+    override fun delete(ids: List<Int>) {
+        nutrientRepository.deleteAllByIdIn(ids)
+    }
 }

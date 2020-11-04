@@ -1,7 +1,8 @@
 package ru.f0x.nutrients.validators
 
+import ru.f0x.nutrients.exceptions.NutrientNotFoundException
 import ru.f0x.nutrients.models.dto.UpdateNutrientDTO
-import ru.f0x.nutrients.services.INutrientService
+import ru.f0x.nutrients.repository.NutrientRepository
 import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass
@@ -14,10 +15,19 @@ annotation class CorrectUpdateNutrient(
         val groups: Array<KClass<*>> = [],
         val payload: Array<KClass<out Payload>> = [])
 
-class UpdateNutrientValidator(private val service: INutrientService) : BaseNutrientValidator<CorrectUpdateNutrient, UpdateNutrientDTO>() {
+class UpdateNutrientValidator(repository: NutrientRepository) : BaseNutrientValidator<CorrectUpdateNutrient, UpdateNutrientDTO>(repository) {
 
     override fun validate(dto: UpdateNutrientDTO): Boolean {
-        TODO("Not yet implemented")
+        if (dto.id == 0)
+            return successResultOrException(
+                    mapOf("id" to SHOULD_BE_NOT_EMPTY_MESSAGE),
+                    dto
+            )
+        val exist = repository.existsById(dto.id)
+        if (exist.not())
+            throw NutrientNotFoundException(dto.id)
+        validateNutrient(dto)
+        return true
     }
 
 }
