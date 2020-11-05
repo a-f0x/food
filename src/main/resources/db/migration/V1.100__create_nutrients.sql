@@ -1,6 +1,6 @@
 CREATE TABLE nutrients
 (
-    id            INT AUTO_INCREMENT PRIMARY KEY,
+    id            SERIAL PRIMARY KEY,
     name          VARCHAR(255)   NOT NULL,
     manufacturer  VARCHAR(255)   NOT NULL DEFAULT 'Unknown',
     carbohydrates NUMERIC(10, 2) NOT NULL DEFAULT 0.0,
