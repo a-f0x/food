@@ -20,7 +20,7 @@ open class ResourceServerConfiguration : ResourceServerConfigurerAdapter() {
                 .antMatchers(HttpMethod.GET, "/api/v1/nutrients/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/nutrients").access("hasRole('ADMIN') or hasRole('USER')")
                 .antMatchers(HttpMethod.PUT, "/api/v1/nutrients").access("hasRole('ADMIN') or hasRole('USER')")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/nutrients").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/nutrients").access("hasRole('ADMIN')")
                 .antMatchers("/**").access("hasRole" + "('ADMIN')")
                 .and().exceptionHandling().accessDeniedHandler(OAuth2AccessDeniedHandler())
     }

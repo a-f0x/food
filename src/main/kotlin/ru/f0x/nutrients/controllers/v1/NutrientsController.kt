@@ -4,10 +4,12 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.f0x.nutrients.createSuccessResponseEntity
+import ru.f0x.nutrients.getUser
 import ru.f0x.nutrients.models.dto.ResponseDTO
 import ru.f0x.nutrients.models.dto.nutrients.CreateNutrientDTO
 import ru.f0x.nutrients.models.dto.nutrients.NutrientDTO
 import ru.f0x.nutrients.services.nutrients.INutrientService
+import java.security.Principal
 import javax.validation.Valid
 
 @RestController
@@ -15,16 +17,16 @@ import javax.validation.Valid
 class NutrientsController(private val service: INutrientService) {
 
     @PostMapping(produces = [(MediaType.APPLICATION_JSON_VALUE)], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun add(@RequestBody @Valid contact: CreateNutrientDTO): ResponseEntity<ResponseDTO<NutrientDTO>> =
-            createSuccessResponseEntity(service.add(contact))
+    fun add(principal: Principal, @RequestBody @Valid nutrient: CreateNutrientDTO): ResponseEntity<ResponseDTO<NutrientDTO>> =
+            createSuccessResponseEntity(service.add(principal.getUser(), nutrient))
 
     @GetMapping(produces = [(MediaType.APPLICATION_JSON_VALUE)])
     fun getAllNutrients(): ResponseEntity<ResponseDTO<List<NutrientDTO>>> = createSuccessResponseEntity(service.getAll())
 
     @PutMapping(produces = [(MediaType.APPLICATION_JSON_VALUE)], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun updateNutrient(
-            @RequestBody @Valid nutrientDTO: NutrientDTO): ResponseEntity<ResponseDTO<NutrientDTO>> =
-            createSuccessResponseEntity(service.update(nutrientDTO))
+    fun updateNutrient(principal: Principal,
+                       @RequestBody @Valid nutrientDTO: NutrientDTO): ResponseEntity<ResponseDTO<NutrientDTO>> =
+            createSuccessResponseEntity(service.update(principal.getUser(), nutrientDTO))
 
     @DeleteMapping(produces = [(MediaType.APPLICATION_JSON_VALUE)], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
     fun deleteNutrient(@RequestBody ids: List<Int>): ResponseEntity<ResponseDTO<String>> {

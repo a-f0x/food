@@ -3,11 +3,14 @@ package ru.f0x.nutrients
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.web.bind.MissingServletRequestParameterException
 import ru.f0x.nutrients.exceptions.NotAcceptableDataException
 import ru.f0x.nutrients.exceptions.NutrientNotFoundException
+import ru.f0x.nutrients.models.dto.CustomUserDetails
 import ru.f0x.nutrients.models.dto.ErrorDTO
 import ru.f0x.nutrients.models.dto.ResponseDTO
+import java.security.Principal
 import java.util.*
 
 fun <T : Any> Optional<T>.getOrNull(): T? {
@@ -15,6 +18,12 @@ fun <T : Any> Optional<T>.getOrNull(): T? {
         get()
     else null
 }
+
+fun Principal.getUser(): CustomUserDetails {
+    val p = (this as? AbstractAuthenticationToken)?.principal as? CustomUserDetails
+    return p ?: throw RuntimeException("invalid user in header $this")
+}
+
 
 fun <T : Any> createSuccessResponseEntity(data: T?): ResponseEntity<ResponseDTO<T>> = ResponseEntity.ok(
         ResponseDTO(

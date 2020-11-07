@@ -1,5 +1,6 @@
 package ru.f0x.nutrients.services.nutrients
 
+import ru.f0x.nutrients.models.dto.CustomUserDetails
 import ru.f0x.nutrients.models.dto.nutrients.NutrientDTO
 
 interface INutrientService {
@@ -8,13 +9,13 @@ interface INutrientService {
 
     fun findByManufacturer(manufacturer: String): List<NutrientDTO>
 
-    fun add(nutrient: NutrientDTO): NutrientDTO
+    fun add(user: CustomUserDetails, nutrient: NutrientDTO): NutrientDTO
 
-    fun addAll(nutrients: List<NutrientDTO>): List<NutrientDTO>
+    fun addAll(user: CustomUserDetails, nutrients: List<NutrientDTO>): List<NutrientDTO>
 
     fun getAll(): List<NutrientDTO>
 
-    fun update(nutrientDTO: NutrientDTO): NutrientDTO
+    fun update(user: CustomUserDetails, nutrientDTO: NutrientDTO): NutrientDTO
 
     fun delete(ids: List<Int>)
 }

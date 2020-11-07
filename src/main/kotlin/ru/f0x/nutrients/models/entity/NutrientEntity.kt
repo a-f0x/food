@@ -10,6 +10,18 @@ class NutrientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Int = 0
 
+    /**
+     * foreign_key на таблицу [UserEntity]
+     * */
+    @Column(name = "created_by_user_id", nullable = false)
+    open var createdByuserId: Int = 0
+
+    /**
+     * foreign_key на таблицу [UserEntity]
+     * */
+    @Column(name = "modified_by_user_id", nullable = false)
+    open var modifiedByuserId: Int = 0
+
     @Column(name = "name", unique = true, nullable = false)
     lateinit var name: String
 

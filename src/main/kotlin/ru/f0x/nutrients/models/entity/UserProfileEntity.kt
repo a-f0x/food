@@ -14,6 +14,7 @@ class UserProfileEntity {
     /**
      * foreign_key на таблицу [UserEntity]
      * */
+    @Column(name = "user_id", nullable = false)
     open var userId: Int = 0
 
     @Enumerated(EnumType.STRING)

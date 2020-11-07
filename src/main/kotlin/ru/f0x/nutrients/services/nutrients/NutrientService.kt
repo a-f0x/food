@@ -2,6 +2,7 @@ package ru.f0x.nutrients.services.nutrients
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import ru.f0x.nutrients.models.dto.CustomUserDetails
 import ru.f0x.nutrients.models.dto.nutrients.NutrientDTO
 import ru.f0x.nutrients.repository.NutrientRepository
 import ru.f0x.nutrients.services.IDateTimeService
@@ -25,7 +26,7 @@ class NutrientService(
                     }
 
     @Transactional
-    override fun add(nutrient: NutrientDTO): NutrientDTO {
+    override fun add(user: CustomUserDetails, nutrient: NutrientDTO): NutrientDTO {
         val currentTime = getCurrentTime()
         return mapper.mapFromEntity(
 
@@ -33,19 +34,23 @@ class NutrientService(
                         mapper.mapFromDTO(nutrient).apply {
                             created = currentTime
                             modified = currentTime
+                            createdByuserId = user.id
+                            modifiedByuserId = user.id
                         }
                 )
         )
     }
 
     @Transactional
-    override fun addAll(nutrients: List<NutrientDTO>): List<NutrientDTO> {
+    override fun addAll(user: CustomUserDetails, nutrients: List<NutrientDTO>): List<NutrientDTO> {
         val currentTime = getCurrentTime()
         return nutrientRepository.saveAll(
                 nutrients.map {
                     mapper.mapFromDTO(it).apply {
                         created = currentTime
                         modified = currentTime
+                        createdByuserId = user.id
+                        modifiedByuserId = user.id
                     }
                 })
                 .map {
@@ -55,12 +60,13 @@ class NutrientService(
 
     override fun getAll(): List<NutrientDTO> = nutrientRepository.findAll().map { mapper.mapFromEntity(it) }
 
-    override fun update(nutrientDTO: NutrientDTO): NutrientDTO {
+    override fun update(user: CustomUserDetails, nutrientDTO: NutrientDTO): NutrientDTO {
 
         return mapper.mapFromEntity(
                 nutrientRepository.save(
                         mapper.mapFromDTO(nutrientDTO).apply {
                             modified = getCurrentTime()
+                            modifiedByuserId = user.id
                         }
                 )
         )

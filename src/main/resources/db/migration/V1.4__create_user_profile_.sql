@@ -1,7 +1,7 @@
 CREATE TABLE user_profile
 (
     id       SERIAL,
-    user_id  int            NOT NULL,
+    user_id  INT            NOT NULL,
     sex      VARCHAR(16)    NOT NULL,
     weight   NUMERIC(10, 2) NOT NULL,
     height   NUMERIC(10, 2) NOT NULL,
