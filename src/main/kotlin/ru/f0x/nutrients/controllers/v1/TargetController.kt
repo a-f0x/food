@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 import ru.f0x.nutrients.createSuccessResponseEntity
 import ru.f0x.nutrients.getUser
 import ru.f0x.nutrients.models.dto.ResponseDTO
-import ru.f0x.nutrients.models.dto.calculator.TargetCalculationResult
+import ru.f0x.nutrients.models.dto.calculator.TargetCalculationResultDTO
 import ru.f0x.nutrients.services.calculator.ITargetCalculationService
 import java.security.Principal
 
@@ -17,7 +17,7 @@ import java.security.Principal
 class TargetController(private val service: ITargetCalculationService) {
 
     @GetMapping(produces = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun getTargetCalculationResult(principal: Principal): ResponseEntity<ResponseDTO<TargetCalculationResult>> {
+    fun getTargetCalculationResult(principal: Principal): ResponseEntity<ResponseDTO<TargetCalculationResultDTO>> {
         return createSuccessResponseEntity(service.calculate(principal.getUser()))
     }
 }
