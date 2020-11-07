@@ -3,12 +3,11 @@ package ru.f0x.nutrients.services.users
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import ru.f0x.nutrients.models.dto.CustomUserDetails
 import ru.f0x.nutrients.models.dto.users.CreateUserDTO
 import ru.f0x.nutrients.models.dto.users.UserDTO
-import ru.f0x.nutrients.models.dto.users.UserProfileDTO
 import ru.f0x.nutrients.models.entity.RoleEntity
-import ru.f0x.nutrients.models.entity.UserEntity
-import ru.f0x.nutrients.models.entity.UserProfileEntity
+import ru.f0x.nutrients.models.entity.RoleEnum
 import ru.f0x.nutrients.repository.RolesRepository
 import ru.f0x.nutrients.repository.UserProfileRepository
 import ru.f0x.nutrients.repository.UsersRepository
@@ -38,48 +37,24 @@ class UserService(
     override fun registerUser(createUserDTO: CreateUserDTO): UserDTO {
         val currentTime = getCurrentTime()
         val u = usersRepository.save(
-                UserEntity().apply {
-                    this.email = createUserDTO.email
-                    this.pwd = passwordEncoder.encode(createUserDTO.password)
-                    this.created = currentTime
-                    this.modified = currentTime
-                    this.roles = mutableSetOf(
-                            findRole(RoleEntity.USER)
-                    )
-                }
-        )
-
-        val p = profileRepository.save(
-                UserProfileEntity().apply {
-                    this.sex = createUserDTO.profile.sex
-                    this.weight = createUserDTO.profile.weight
-                    this.height = createUserDTO.profile.height
-                    this.age = createUserDTO.profile.age
-                    this.activity = createUserDTO.profile.activity
-                    this.created = currentTime
-                    this.modified = currentTime
-                    this.userId = u.id
-                }
-        )
-        return UserDTO(
-                id = u.id,
-                password = createUserDTO.password,
-                email = createUserDTO.email,
-                profile = UserProfileDTO(
-                        p.id,
-                        p.sex,
-                        p.weight,
-                        p.height,
-                        p.age,
-                        p.activity
+                mapper.mapFromDTO(
+                        createUserDTO,
+                        passwordEncoder.encode(createUserDTO.password),
+                        currentTime,
+                        userRoles.first { it.role == RoleEnum.USER }
                 )
         )
+        val p = profileRepository.save(
+                mapper.mapFromDTO(createUserDTO.profile, currentTime, u.id)
+        )
+        return mapper.mapFromEntity(u, p, createUserDTO.password)
     }
 
-
-    private fun findRole(roleName: String): RoleEntity {
-        return userRoles.first { it.role == roleName }
+    override fun getUserProfile(user: CustomUserDetails): UserDTO {
+        val p = profileRepository.findByUserId(user.id)
+        return mapper.mapFromEntity(user, p, null)
     }
+
 
     private fun getCurrentTime() = dateTimeService.getCurrentTime()
 

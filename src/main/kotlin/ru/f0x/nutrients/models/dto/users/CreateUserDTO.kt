@@ -13,5 +13,4 @@ class CreateUserDTO(
         password = password,
         email = email,
         profile = profile
-
 )

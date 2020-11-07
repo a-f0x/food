@@ -34,6 +34,10 @@ class UserProfileEntity {
     @Column(name = "activity", length = 32, nullable = false)
     open lateinit var activity: ActivityEnum
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "target", length = 32, nullable = false)
+    open lateinit var target: TargetEnum
+
     @Column(name = "created", columnDefinition = "TIMESTAMP")
     open lateinit var created: LocalDateTime
 
