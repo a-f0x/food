@@ -11,18 +11,17 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore
 import javax.sql.DataSource
 
 @Configuration
-open class AuthBeanConfig {
+class AuthBeanConfig {
 
     @Bean
-    open fun passwordEncode(): PasswordEncoder {
-//        return BCryptPasswordEncoder()
+    fun passwordEncodeNoop(): PasswordEncoder {
         return NoOpPasswordEncoder.getInstance()
-
     }
+
 
     @Bean
     @Autowired
-    open fun tokenStore(dataSource: DataSource): TokenStore {
+    fun tokenStore(dataSource: DataSource): TokenStore {
         val store = JdbcTokenStore(dataSource)
         store.setAuthenticationKeyGenerator(DefaultAuthenticationKeyGenerator())
         return store

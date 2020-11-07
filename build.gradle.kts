@@ -47,6 +47,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.2")
     implementation("org.flywaydb:flyway-core")
     implementation("com.vladmihalcea:hibernate-types-52:2.7.1")
+    implementation("commons-validator:commons-validator:1.4.1")
 
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

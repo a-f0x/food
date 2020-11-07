@@ -1,5 +1,6 @@
 package ru.f0x.nutrients.models.entity
 
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -26,5 +27,11 @@ class NutrientEntity {
 
     @Column(name = "kilocalories", nullable = false)
     var kilocalories: Float = 0.0f
+
+    @Column(name = "created", columnDefinition = "TIMESTAMP")
+    open lateinit var created: LocalDateTime
+
+    @Column(name = "modified", columnDefinition = "TIMESTAMP")
+    open lateinit var modified: LocalDateTime
 
 }

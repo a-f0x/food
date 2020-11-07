@@ -4,10 +4,10 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.f0x.nutrients.createSuccessResponseEntity
-import ru.f0x.nutrients.models.dto.CreateNutrientDTO
-import ru.f0x.nutrients.models.dto.NutrientDTO
 import ru.f0x.nutrients.models.dto.ResponseDTO
-import ru.f0x.nutrients.services.INutrientService
+import ru.f0x.nutrients.models.dto.nutrients.CreateNutrientDTO
+import ru.f0x.nutrients.models.dto.nutrients.NutrientDTO
+import ru.f0x.nutrients.services.nutrients.INutrientService
 import javax.validation.Valid
 
 @RestController

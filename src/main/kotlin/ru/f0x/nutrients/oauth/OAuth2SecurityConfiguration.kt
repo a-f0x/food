@@ -19,14 +19,9 @@ import org.springframework.security.oauth2.provider.token.TokenStore
 
 @Configuration
 @EnableWebSecurity
-open class OAuth2SecurityConfiguration : WebSecurityConfigurerAdapter() {
-
-    @Autowired
-    lateinit var clientDetailsService: ClientDetailsService
-
-    @Autowired
-    lateinit var customUserDetailsService: UserDetailsService
-
+open class OAuth2SecurityConfiguration(
+        private val clientDetailsService: ClientDetailsService,
+        private val customUserDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
     @Autowired
     @Throws(Exception::class)
     fun globalUserDetails(auth: AuthenticationManagerBuilder) {

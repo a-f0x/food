@@ -3,11 +3,11 @@ package ru.f0x.nutrients.models.dto
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import ru.f0x.nutrients.models.entity.User
+import ru.f0x.nutrients.models.entity.UserEntity
 import java.util.stream.Collectors
 
 
-class CustomUserDetails(user: User) : User(user), UserDetails {
+class CustomUserDetails(user: UserEntity) : UserEntity(user), UserDetails {
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
 
@@ -18,7 +18,7 @@ class CustomUserDetails(user: User) : User(user), UserDetails {
     }
 
     override fun getUsername(): String? {
-        return super.name
+        return super.email
     }
 
     override fun getPassword(): String? {

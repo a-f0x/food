@@ -1,8 +1,9 @@
-package ru.f0x.nutrients.validators
+package ru.f0x.nutrients.validators.nutrients
 
 import ru.f0x.nutrients.exceptions.NutrientNotFoundException
-import ru.f0x.nutrients.models.dto.UpdateNutrientDTO
+import ru.f0x.nutrients.models.dto.nutrients.UpdateNutrientDTO
 import ru.f0x.nutrients.repository.NutrientRepository
+import ru.f0x.nutrients.validators.SHOULD_BE_NOT_EMPTY_MESSAGE
 import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass

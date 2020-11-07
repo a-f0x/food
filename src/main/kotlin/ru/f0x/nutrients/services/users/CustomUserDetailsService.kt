@@ -1,4 +1,4 @@
-package ru.f0x.nutrients.services
+package ru.f0x.nutrients.services.users
 
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -14,7 +14,7 @@ class CustomUserDetailsService(private val usersRepository: UsersRepository) : U
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String?): UserDetails {
 
-        val usersOptional = usersRepository.findByName(username)
+        val usersOptional = usersRepository.findByEmail(username)
 
         usersOptional.orElseThrow { UsernameNotFoundException("Username not found!") }
         return usersOptional

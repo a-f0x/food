@@ -1,10 +1,9 @@
-package ru.f0x.nutrients.models.dto
+package ru.f0x.nutrients.models.dto.nutrients
 
-import ru.f0x.nutrients.validators.CorrectUpdateNutrient
+import ru.f0x.nutrients.validators.nutrients.CorrectCreateNutrient
 
-@CorrectUpdateNutrient
-class UpdateNutrientDTO(
-        override val id: Int,
+@CorrectCreateNutrient
+class CreateNutrientDTO(
         name: String,
         manufacturer: String?,
         carbohydrates: Float,
@@ -12,7 +11,7 @@ class UpdateNutrientDTO(
         fats: Float,
         kilocalories: Float
 ) : NutrientDTO(
-        id,
+        null,
         name,
         manufacturer,
         carbohydrates,

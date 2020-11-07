@@ -1,6 +1,6 @@
-package ru.f0x.nutrients.services
+package ru.f0x.nutrients.services.nutrients
 
-import ru.f0x.nutrients.models.dto.NutrientDTO
+import ru.f0x.nutrients.models.dto.nutrients.NutrientDTO
 
 interface INutrientService {
 

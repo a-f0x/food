@@ -1,7 +1,7 @@
-package ru.f0x.nutrients.services
+package ru.f0x.nutrients.services.nutrients
 
 import org.springframework.stereotype.Component
-import ru.f0x.nutrients.models.dto.NutrientDTO
+import ru.f0x.nutrients.models.dto.nutrients.NutrientDTO
 import ru.f0x.nutrients.models.entity.NutrientEntity
 
 @Component

@@ -1,5 +1,6 @@
 INSERT INTO nutrients(name, proteins, fats, carbohydrates, kilocalories)
-VALUES ('протеин kult standard whey', 80, 6, 5.6, 410),
+VALUES ('гейнер kult mass', 80, 6, 5.6, 494),
+       ('протеин kult standard whey', 80, 6, 5.6, 410),
        ('протеин micellar creme', 66.6, 0, 30, 418.6),
        ('Adrenaline Rush', 0.40, 0.00, 14.20, 58.4),
        ('F100 Multipower', 87.50, 0.50, 2.40, 364.1),

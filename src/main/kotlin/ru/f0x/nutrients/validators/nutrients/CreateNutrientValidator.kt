@@ -1,7 +1,8 @@
-package ru.f0x.nutrients.validators
+package ru.f0x.nutrients.validators.nutrients
 
-import ru.f0x.nutrients.models.dto.CreateNutrientDTO
+import ru.f0x.nutrients.models.dto.nutrients.CreateNutrientDTO
 import ru.f0x.nutrients.repository.NutrientRepository
+import ru.f0x.nutrients.validators.ALREADY_EXIST_MESSAGE
 import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass
@@ -22,7 +23,7 @@ class CreateNutrientValidator(repository: NutrientRepository)
         val nutrient = repository.findAllByName(dto.name)
         if (nutrient.isNotEmpty())
             return successResultOrException(
-                    mapOf("name" to String.format(ALREADY_EXIST_MESSAGE, dto.name)),
+                    mapOf("name" to ALREADY_EXIST_MESSAGE),
                     dto
             )
         return true

@@ -8,11 +8,12 @@ import ru.f0x.nutrients.exceptions.NotAcceptableDataException
 import ru.f0x.nutrients.exceptions.NutrientNotFoundException
 import ru.f0x.nutrients.models.dto.ErrorDTO
 import ru.f0x.nutrients.models.dto.ResponseDTO
+import java.util.*
 
-
-fun String?.isBlank(): Boolean {
-    this ?: return false
-    return isEmpty()
+fun <T : Any> Optional<T>.getOrNull(): T? {
+    return if (isPresent)
+        get()
+    else null
 }
 
 fun <T : Any> createSuccessResponseEntity(data: T?): ResponseEntity<ResponseDTO<T>> = ResponseEntity.ok(

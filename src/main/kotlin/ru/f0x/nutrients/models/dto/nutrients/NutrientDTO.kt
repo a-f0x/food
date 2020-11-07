@@ -1,4 +1,4 @@
-package ru.f0x.nutrients.models.dto
+package ru.f0x.nutrients.models.dto.nutrients
 
 open class NutrientDTO(
         open val id: Int?,

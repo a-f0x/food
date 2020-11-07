@@ -7,7 +7,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "users")
-open class User : Serializable {
+open class UserEntity : Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,7 @@ open class User : Serializable {
     open var id: Int = 0
 
     @Column(name = "login", unique = true, nullable = false)
-    open lateinit var name: String
+    open lateinit var email: String
 
     @Column(name = "password", nullable = false)
     open lateinit var pwd: String
@@ -24,25 +24,25 @@ open class User : Serializable {
     @JoinTable(name = "users_roles",
             joinColumns = [JoinColumn(name = "user_id")],
             inverseJoinColumns = [JoinColumn(name = "role_id")])
-    open var roles: Set<Role>? = null
+    open var roles: Set<RoleEntity>? = null
 
     constructor()
 
     @Column(name = "created", columnDefinition = "TIMESTAMP")
-    open lateinit var creationDate: LocalDateTime
+    open lateinit var created: LocalDateTime
 
     @Column(name = "modified", columnDefinition = "TIMESTAMP")
-    open lateinit var modificationDate: LocalDateTime
+    open lateinit var modified: LocalDateTime
 
-    constructor(users: User) {
+    constructor(users: UserEntity) {
         this.id = users.id
-        this.name = users.name
+        this.email = users.email
         this.pwd = users.pwd
         this.roles = users.roles
     }
 
     override fun toString(): String {
-        return "User(id=$id, name=$name,  roles=$roles)"
+        return "User(id=$id, name=$email,  roles=$roles)"
     }
 
 

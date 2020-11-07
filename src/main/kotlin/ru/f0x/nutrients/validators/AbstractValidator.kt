@@ -8,11 +8,6 @@ import javax.validation.ConstraintValidatorContext
  * Валидация объекта целеком а не по полям используется потому что баг https://youtrack.jetbrains.com/issue/KT-13228
  * */
 abstract class AbstractValidator<A : Annotation, DTO : Any> : ConstraintValidator<A, DTO> {
-    companion object {
-        const val SHOULD_BE_NOT_EMPTY_MESSAGE = "should be not empty"
-        const val SHOULD_BE_ABOVE_MESSAGE = "should be above empty %d"
-        const val ALREADY_EXIST_MESSAGE = "%s already exist"
-    }
 
     override fun isValid(value: DTO?, context: ConstraintValidatorContext?): Boolean {
         if (value == null)

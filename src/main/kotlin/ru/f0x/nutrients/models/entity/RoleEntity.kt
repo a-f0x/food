@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "roles")
-class Role : Serializable {
+class RoleEntity : Serializable {
 
     companion object {
         const val ADMIN = "ADMIN"
