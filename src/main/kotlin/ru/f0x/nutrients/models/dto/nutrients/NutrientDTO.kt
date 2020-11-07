@@ -7,5 +7,5 @@ open class NutrientDTO(
         val carbohydrates: Float,
         val proteins: Float,
         val fats: Float,
-        val kilocalories: Float
+        val kCal: Float
 )

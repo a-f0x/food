@@ -37,8 +37,8 @@ class NutrientEntity {
     @Column(name = "fats", nullable = false)
     var fats: Float = 0.0f
 
-    @Column(name = "kilocalories", nullable = false)
-    var kilocalories: Float = 0.0f
+    @Column(name = "kCal", nullable = false)
+    var kCal: Float = 0.0f
 
     @Column(name = "created", columnDefinition = "TIMESTAMP")
     open lateinit var created: LocalDateTime

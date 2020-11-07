@@ -18,7 +18,7 @@ INSERT INTO nutrients(name,
                       proteins,
                       fats,
                       carbohydrates,
-                      kilocalories,
+                      kCal,
                       created_by_user_id,
                       modified_by_user_id)
 VALUES ('гейнер kult mass', 80, 6, 5.6, 494, get_admin(), get_admin()),

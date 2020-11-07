@@ -10,7 +10,7 @@ class UpdateNutrientDTO(
         carbohydrates: Float,
         proteins: Float,
         fats: Float,
-        kilocalories: Float
+        kCal: Float
 ) : NutrientDTO(
         id,
         name,
@@ -18,5 +18,5 @@ class UpdateNutrientDTO(
         carbohydrates,
         proteins,
         fats,
-        kilocalories
+        kCal
 )

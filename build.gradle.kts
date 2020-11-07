@@ -21,6 +21,9 @@ repositories {
 }
 
 dependencies {
+    implementation("org.junit.jupiter:junit-jupiter:5.4.2")
+    implementation("org.junit.jupiter:junit-jupiter:5.4.2")
+    implementation("org.junit.jupiter:junit-jupiter:5.4.2")
     testImplementation("junit:junit:4.13")
     testImplementation("org.mockito:mockito-core:2.13.0")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")

@@ -9,7 +9,7 @@ class CreateNutrientDTO(
         carbohydrates: Float,
         proteins: Float,
         fats: Float,
-        kilocalories: Float
+        kCal: Float
 ) : NutrientDTO(
         null,
         name,
@@ -17,5 +17,5 @@ class CreateNutrientDTO(
         carbohydrates,
         proteins,
         fats,
-        kilocalories
+        kCal
 )

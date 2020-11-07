@@ -17,7 +17,7 @@ class NutrientMapper {
             carbohydrates = dto.carbohydrates
             proteins = dto.proteins
             fats = dto.fats
-            kilocalories = dto.kilocalories
+            kCal = dto.kCal
         }
     }
 
@@ -29,7 +29,7 @@ class NutrientMapper {
                 entity.carbohydrates,
                 entity.proteins,
                 entity.fats,
-                entity.kilocalories
+                entity.kCal
         )
     }
 }
