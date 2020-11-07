@@ -3,7 +3,7 @@ package ru.f0x.nutrients.models.entity
 enum class ActivityEnum {
     MINIMUM,
     WEAK,
-    MIDDLE,
+    MEDIUM,
     HIGH,
     EXTRA_HIGH
 }
