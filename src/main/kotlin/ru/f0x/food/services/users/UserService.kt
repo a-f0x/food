@@ -21,6 +21,7 @@ class UserService(
         private val dateTimeService: IDateTimeService,
         private val mapper: UserMapper
 ) : IUserService {
+
     private val passwordEncoder = BCryptPasswordEncoder()
     private val userRoles: MutableSet<RoleEntity> = mutableSetOf()
 
@@ -28,10 +29,7 @@ class UserService(
         userRoles.addAll(rolesRepository.findAll())
     }
 
-
-    override fun isEmailExist(email: String): Boolean {
-        return usersRepository.existsByEmail(email)
-    }
+    override fun isEmailExist(email: String): Boolean = usersRepository.existsByEmail(email)
 
     @Transactional
     override fun registerUser(createUserDTO: CreateUserDTO): ProfileResponse {
