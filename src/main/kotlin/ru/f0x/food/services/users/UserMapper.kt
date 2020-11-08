@@ -68,19 +68,19 @@ class UserMapper {
                 result.nutrients.proteins.name,
                 result.nutrients.proteins.weightGram,
                 result.nutrients.proteins.kCal,
-                result.nutrients.proteins.type.kCalPerGram
+                result.nutrients.proteins.kCalPerGram
         )
         val fats = NutrientsResponse(
                 result.nutrients.fats.name,
                 result.nutrients.fats.weightGram,
                 result.nutrients.fats.kCal,
-                result.nutrients.fats.type.kCalPerGram
+                result.nutrients.fats.kCalPerGram
         )
         val carbohydrates = NutrientsResponse(
                 result.nutrients.carbohydrates.name,
                 result.nutrients.carbohydrates.weightGram,
                 result.nutrients.carbohydrates.kCal,
-                result.nutrients.carbohydrates.type.kCalPerGram
+                result.nutrients.carbohydrates.kCalPerGram
         )
 
         return CalcResult(
