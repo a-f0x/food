@@ -7,16 +7,16 @@ import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass
 
-@Constraint(validatedBy = [CreateNutrientValidator::class])
+@Constraint(validatedBy = [CreateFoodProductValidator::class])
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class CorrectCreateNutrient(
+annotation class CorrectCreateFoodProduct(
         val message: String = "Invalid value",
         val groups: Array<KClass<*>> = [],
         val payload: Array<KClass<out Payload>> = [])
 
-class CreateNutrientValidator(repository: FoodRepository)
-    : BaseNutrientValidator<CorrectCreateNutrient, CreateFoodProductDTO>(repository) {
+class CreateFoodProductValidator(repository: FoodRepository)
+    : BaseFoodValidator<CorrectCreateFoodProduct, CreateFoodProductDTO>(repository) {
 
     override fun validate(dto: CreateFoodProductDTO): Boolean {
         validateNutrient(dto)

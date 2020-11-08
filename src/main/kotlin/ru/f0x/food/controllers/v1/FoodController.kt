@@ -24,8 +24,8 @@ class FoodController(private val service: IFoodProductsService) {
     fun getAllFoodProducts(): ResponseEntity<ResponseDTO<List<FoodProductDTO>>> = createSuccessResponseEntity(service.getAll())
 
     @PutMapping(produces = [(MediaType.APPLICATION_JSON_VALUE)], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun updateNutrient(principal: Principal,
-                       @RequestBody @Valid foodProductDTO: FoodProductDTO): ResponseEntity<ResponseDTO<FoodProductDTO>> =
+    fun updateFoodProduct(principal: Principal,
+                          @RequestBody @Valid foodProductDTO: FoodProductDTO): ResponseEntity<ResponseDTO<FoodProductDTO>> =
             createSuccessResponseEntity(service.update(principal.getUser(), foodProductDTO))
 
     @DeleteMapping(produces = [(MediaType.APPLICATION_JSON_VALUE)], consumes = [(MediaType.APPLICATION_JSON_VALUE)])

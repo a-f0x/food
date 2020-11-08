@@ -7,5 +7,5 @@ open class FoodProductDTO(
         val carbohydrates: Float,
         val proteins: Float,
         val fats: Float,
-        val kCal: Float
+        val kiloCal: Float
 )

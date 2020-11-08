@@ -4,6 +4,6 @@ import ru.f0x.food.models.entity.TargetEnum
 
 data class CalculationResult(
         val target: TargetEnum,
-        val basicKCal: Int,
+        val basicKCal: Float,
         val nutrients: NutrientsResult
 )

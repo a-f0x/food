@@ -14,7 +14,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/nutrients
+    url: jdbc:postgresql://localhost:5433/food
     username: postgres
     password: postgres
 

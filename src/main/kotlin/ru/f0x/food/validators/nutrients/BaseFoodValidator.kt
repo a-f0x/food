@@ -6,7 +6,7 @@ import ru.f0x.food.validators.AbstractValidator
 import ru.f0x.food.validators.SHOULD_BE_ABOVE_MESSAGE
 import ru.f0x.food.validators.SHOULD_BE_NOT_EMPTY_MESSAGE
 
-abstract class BaseNutrientValidator<A : Annotation, DTO : FoodProductDTO>(
+abstract class BaseFoodValidator<A : Annotation, DTO : FoodProductDTO>(
         protected val repository: FoodRepository
 ) : AbstractValidator<A, DTO>() {
 
@@ -16,8 +16,8 @@ abstract class BaseNutrientValidator<A : Annotation, DTO : FoodProductDTO>(
         if (dto.name.isEmpty())
             errors["name"] = SHOULD_BE_NOT_EMPTY_MESSAGE
 
-        if (dto.kCal <= 0)
-            errors["kilocalories"] = String.format(SHOULD_BE_ABOVE_MESSAGE, 0)
+        if (dto.kiloCal <= 0)
+            errors["kilo_cal"] = String.format(SHOULD_BE_ABOVE_MESSAGE, 0)
 
         return successResultOrException(errors, dto)
     }

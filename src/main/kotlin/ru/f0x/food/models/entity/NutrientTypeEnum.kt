@@ -1,6 +1,8 @@
 package ru.f0x.food.models.entity
 
-sealed class NutrientType(val kCalPerGram: Int)
+sealed class NutrientType(val kCalPerGram: Int) {
+    val name = this.javaClass.simpleName
+}
 
 object Fat : NutrientType(9)
 

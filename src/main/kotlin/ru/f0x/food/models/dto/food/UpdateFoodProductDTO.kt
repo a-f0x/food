@@ -1,8 +1,8 @@
 package ru.f0x.food.models.dto.food
 
-import ru.f0x.food.validators.nutrients.CorrectUpdateNutrient
+import ru.f0x.food.validators.nutrients.CorrectUpdateFoodProduct
 
-@CorrectUpdateNutrient
+@CorrectUpdateFoodProduct
 class UpdateFoodProductDTO(
         override val id: Int,
         name: String,
@@ -10,7 +10,7 @@ class UpdateFoodProductDTO(
         carbohydrates: Float,
         proteins: Float,
         fats: Float,
-        kCal: Float
+        kiloCal: Float
 ) : FoodProductDTO(
         id,
         name,
@@ -18,5 +18,5 @@ class UpdateFoodProductDTO(
         carbohydrates,
         proteins,
         fats,
-        kCal
+        kiloCal
 )

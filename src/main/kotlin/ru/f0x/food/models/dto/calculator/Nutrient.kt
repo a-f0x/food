@@ -3,6 +3,7 @@ package ru.f0x.food.models.dto.calculator
 import ru.f0x.food.models.entity.NutrientType
 
 class Nutrient<T : NutrientType> private constructor(val type: T) {
+    val name = type.name
 
     var weightGram: Float = 0f
         private set

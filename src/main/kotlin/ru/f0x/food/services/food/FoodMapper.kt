@@ -17,7 +17,7 @@ class FoodMapper {
             carbohydrates = dto.carbohydrates
             proteins = dto.proteins
             fats = dto.fats
-            kCal = dto.kCal
+            kCal = dto.kiloCal
         }
     }
 

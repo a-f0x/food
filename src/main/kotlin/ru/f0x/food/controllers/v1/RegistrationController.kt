@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import ru.f0x.food.createSuccessResponseEntity
 import ru.f0x.food.models.dto.ResponseDTO
 import ru.f0x.food.models.dto.users.CreateUserDTO
-import ru.f0x.food.models.dto.users.UserDTO
+import ru.f0x.food.models.dto.users.ProfileResponse
 import ru.f0x.food.services.users.IUserService
 import javax.validation.Valid
 
@@ -18,7 +18,7 @@ import javax.validation.Valid
 class RegistrationController(private val userService: IUserService) {
     @PostMapping(produces = [(MediaType.APPLICATION_JSON_VALUE)],
             consumes = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun registerUser(@RequestBody @Valid createUserDTO: CreateUserDTO): ResponseEntity<ResponseDTO<UserDTO>> {
+    fun registerUser(@RequestBody @Valid createUserDTO: CreateUserDTO): ResponseEntity<ResponseDTO<ProfileResponse>> {
         return createSuccessResponseEntity(userService.registerUser(createUserDTO))
     }
 

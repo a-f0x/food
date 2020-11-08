@@ -37,7 +37,7 @@ class FoodEntity {
     @Column(name = "fats", nullable = false)
     var fats: Float = 0.0f
 
-    @Column(name = "kCal", nullable = false)
+    @Column(name = "kcal", nullable = false)
     var kCal: Float = 0.0f
 
     @Column(name = "created", columnDefinition = "TIMESTAMP")

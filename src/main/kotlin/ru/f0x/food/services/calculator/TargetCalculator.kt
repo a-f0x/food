@@ -39,7 +39,7 @@ class TargetCalculator(
      *  Минимально необходимое количество килокалорий  при выбранном уровне активности
      * что бы вес не изменялся
      * */
-    private fun calculateBasicMetabolismKCal(): Int = (calculateMinimumBasicMetabolismKCal() * getActivityRate()).toInt()
+    private fun calculateBasicMetabolismKCal(): Float = calculateMinimumBasicMetabolismKCal() * getActivityRate()
 
     private fun calculateMinimumBasicMetabolismKCal(): Float = when (sex) {
         SexEnum.MALE -> calculateBMRForMale()
