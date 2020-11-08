@@ -1,8 +1,9 @@
 package ru.f0x.food.models.dto.calculator
 
+import ru.f0x.food.models.entity.TargetEnum
+
 data class CalculationResult(
-        val totalKCal: Int,
-        val proteins: Float,
-        val fats: Float,
-        val carbohydrates: Float
+        val target: TargetEnum,
+        val basicKCal: Int,
+        val nutrients: NutrientsResult
 )

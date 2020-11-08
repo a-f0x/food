@@ -16,7 +16,7 @@ class TargetCalculationService(private val userService: IUserService) : ITargetC
                 profile.age,
                 profile.activity,
                 profile.sex
-        ).calculate()
+        ).calculate(profile.target)
     }
 
 }
