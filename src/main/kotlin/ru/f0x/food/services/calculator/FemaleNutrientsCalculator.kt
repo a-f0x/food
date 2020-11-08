@@ -1,5 +1,7 @@
-package ru.f0x.food.models.dto.calculator
+package ru.f0x.food.services.calculator
 
+import ru.f0x.food.models.dto.calculator.Nutrient
+import ru.f0x.food.models.dto.calculator.NutrientsResult
 import ru.f0x.food.models.entity.Carbohydrate
 import ru.f0x.food.models.entity.Fat
 import ru.f0x.food.models.entity.Protein

@@ -1,8 +1,6 @@
 package ru.f0x.food.services.calculator
 
 import ru.f0x.food.models.dto.calculator.CalculationResult
-import ru.f0x.food.models.dto.calculator.FemaleNutrientsCalculator
-import ru.f0x.food.models.dto.calculator.MaleNutrientsCalculator
 import ru.f0x.food.models.entity.ActivityEnum
 import ru.f0x.food.models.entity.SexEnum
 import ru.f0x.food.models.entity.TargetEnum
