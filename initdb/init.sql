@@ -1,3 +1,3 @@
-CREATE DATABASE nutrients;
-CREATE USER nutrient_admin PASSWORD 'admin123';
-GRANT ALL PRIVILEGES ON DATABASE "nutrients" TO nutrient_admin;
+CREATE DATABASE food;
+CREATE USER food_admin PASSWORD 'admin123';
+GRANT ALL PRIVILEGES ON DATABASE "food" TO food_admin;
