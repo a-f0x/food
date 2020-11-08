@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.web.bind.MissingServletRequestParameterException
+import ru.f0x.food.exceptions.FoodProductNotFoundException
 import ru.f0x.food.exceptions.NotAcceptableDataException
-import ru.f0x.food.exceptions.NutrientNotFoundException
 import ru.f0x.food.models.dto.CustomUserDetails
 import ru.f0x.food.models.dto.ErrorDTO
 import ru.f0x.food.models.dto.ResponseDTO
@@ -45,7 +45,7 @@ fun NotAcceptableDataException.createValidationErrorResponseEntity(): ResponseEn
         HttpStatus.UNPROCESSABLE_ENTITY
 )
 
-fun NutrientNotFoundException.createNotFoundErrorResponseEntity(): ResponseEntity<ResponseDTO<Any>> = ResponseEntity(
+fun FoodProductNotFoundException.createNotFoundErrorResponseEntity(): ResponseEntity<ResponseDTO<Any>> = ResponseEntity(
         ResponseDTO(
                 data = null,
                 error = ErrorDTO(

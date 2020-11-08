@@ -1,6 +1,6 @@
 package ru.f0x.food.models.dto.food
 
-import ru.f0x.food.validators.nutrients.CorrectCreateFoodProduct
+import ru.f0x.food.validators.food.CorrectCreateFoodProduct
 
 @CorrectCreateFoodProduct
 class CreateFoodProductDTO(

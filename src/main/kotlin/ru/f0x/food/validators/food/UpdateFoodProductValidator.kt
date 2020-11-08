@@ -1,6 +1,6 @@
-package ru.f0x.food.validators.nutrients
+package ru.f0x.food.validators.food
 
-import ru.f0x.food.exceptions.NutrientNotFoundException
+import ru.f0x.food.exceptions.FoodProductNotFoundException
 import ru.f0x.food.models.dto.food.UpdateFoodProductDTO
 import ru.f0x.food.repository.FoodRepository
 import ru.f0x.food.validators.SHOULD_BE_NOT_EMPTY_MESSAGE
@@ -26,7 +26,7 @@ class UpdateFoodProductValidator(repository: FoodRepository) : BaseFoodValidator
             )
         val exist = repository.existsById(dto.id)
         if (exist.not())
-            throw NutrientNotFoundException(dto.id)
+            throw FoodProductNotFoundException(dto.id)
         validateNutrient(dto)
         return true
     }

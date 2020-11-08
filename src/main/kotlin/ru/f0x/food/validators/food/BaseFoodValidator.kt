@@ -1,4 +1,4 @@
-package ru.f0x.food.validators.nutrients
+package ru.f0x.food.validators.food
 
 import ru.f0x.food.models.dto.food.FoodProductDTO
 import ru.f0x.food.repository.FoodRepository

@@ -1,4 +1,4 @@
-package ru.f0x.food.validators.nutrients
+package ru.f0x.food.validators.food
 
 import ru.f0x.food.models.dto.food.CreateFoodProductDTO
 import ru.f0x.food.repository.FoodRepository
@@ -20,8 +20,8 @@ class CreateFoodProductValidator(repository: FoodRepository)
 
     override fun validate(dto: CreateFoodProductDTO): Boolean {
         validateNutrient(dto)
-        val nutrient = repository.findAllByName(dto.name)
-        if (nutrient.isNotEmpty())
+        val foodProduct = repository.findByName(dto.name)
+        if (foodProduct != null)
             return successResultOrException(
                     mapOf("name" to ALREADY_EXIST_MESSAGE),
                     dto

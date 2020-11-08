@@ -13,8 +13,8 @@ import ru.f0x.food.createBadRequestErrorResponseEntity
 import ru.f0x.food.createInternalServerErrorResponseEntity
 import ru.f0x.food.createNotFoundErrorResponseEntity
 import ru.f0x.food.createValidationErrorResponseEntity
+import ru.f0x.food.exceptions.FoodProductNotFoundException
 import ru.f0x.food.exceptions.NotAcceptableDataException
-import ru.f0x.food.exceptions.NutrientNotFoundException
 import ru.f0x.food.models.dto.ResponseDTO
 
 @ControllerAdvice
@@ -41,8 +41,8 @@ class MvcExceptionHandler : ResponseEntityExceptionHandler() {
         return ex.createValidationErrorResponseEntity()
     }
 
-    @ExceptionHandler(NutrientNotFoundException::class)
-    fun handleNutrientNotFoundException(ex: NutrientNotFoundException): ResponseEntity<ResponseDTO<Any>> {
+    @ExceptionHandler(FoodProductNotFoundException::class)
+    fun handleNutrientNotFoundException(ex: FoodProductNotFoundException): ResponseEntity<ResponseDTO<Any>> {
         logger.error("Contact not found.", ex)
         return ex.createNotFoundErrorResponseEntity()
     }
