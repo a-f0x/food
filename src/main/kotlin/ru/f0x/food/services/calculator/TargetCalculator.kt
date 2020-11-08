@@ -7,7 +7,9 @@ import ru.f0x.food.models.entity.ActivityEnum
 import ru.f0x.food.models.entity.SexEnum
 import ru.f0x.food.models.entity.TargetEnum
 
-
+/**
+ * https://zen.yandex.ru/media/id/5c0eaaff9c61f000aaf6b9be/bju-dlia-pohudeniia-procentnoe-sootnoshenie-i-raschet-sutochnoi-normy-po-dvum-formulam-5c0fb37b71a92900aa02b87a
+ * */
 class TargetCalculator(
         private val weight: Float,
         private val height: Float,
