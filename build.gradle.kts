@@ -12,7 +12,7 @@ group = "ru.f0x"
 version = "0.0.1"
 tasks.bootJar {
     archiveName = "application.jar"
-    mainClassName = "ru.f0x.nutrients.NutrientsApplication"
+    mainClassName = "ru.f0x.food.FoodApplication"
 }
 java.sourceCompatibility = JavaVersion.VERSION_11
 

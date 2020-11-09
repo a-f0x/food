@@ -23,9 +23,9 @@ class MaleNutrientsCalculator(private val basicMetabolismKCal: Float) {
 
     fun calculate(): NutrientsResult {
         val part = basicMetabolismKCal / 10f
-        val protein = Nutrient(Protein, part * 3)
-        val fat = Nutrient(Fat, part * 2)
-        val carbohydrate = Nutrient(Carbohydrate, part * 5)
+        val protein = Nutrient.createFromKCal(Protein, part * 3)
+        val fat = Nutrient.createFromKCal(Fat, part * 2)
+        val carbohydrate = Nutrient.createFromKCal(Carbohydrate, part * 5)
 
         return NutrientsResult(protein, fat, carbohydrate)
     }

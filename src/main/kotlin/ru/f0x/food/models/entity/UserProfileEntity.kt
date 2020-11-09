@@ -38,10 +38,13 @@ class UserProfileEntity {
     @Column(name = "target", length = 32, nullable = false)
     open lateinit var target: TargetEnum
 
-    @Column(name = "created", columnDefinition = "TIMESTAMP")
+    @Column(name = "created", columnDefinition = "TIMESTAMP", updatable = false)
     open lateinit var created: LocalDateTime
 
     @Column(name = "modified", columnDefinition = "TIMESTAMP")
     open lateinit var modified: LocalDateTime
+
+    @Column(name = "gmt")
+    open var gmt: Float = 7f
 
 }

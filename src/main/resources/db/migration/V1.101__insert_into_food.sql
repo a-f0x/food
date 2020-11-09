@@ -15,10 +15,10 @@ END
 $$ LANGUAGE plpgsql;
 
 INSERT INTO food(name,
-                 proteins,
-                 fats,
-                 carbohydrates,
-                 kCal,
+                 protein,
+                 fat,
+                 carb,
+                 k_cal,
                  created_by_user_id,
                  modified_by_user_id)
 VALUES ('смесь риса бурого и дикого', 8, 2, 72, 340, get_admin(), get_admin()),

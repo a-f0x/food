@@ -22,9 +22,9 @@ class FemaleNutrientsCalculator(private val basicMetabolismKCal: Float) {
 
     fun calculate(): NutrientsResult {
         val part = basicMetabolismKCal / 8.7f
-        val protein = Nutrient(Protein, part * 2.2f)
-        val fat = Nutrient(Fat, part * 2f)
-        val carbohydrate = Nutrient(Carbohydrate, part * 4.5f)
+        val protein = Nutrient.createFromKCal(Protein, part * 2.2f)
+        val fat = Nutrient.createFromKCal(Fat, part * 2f)
+        val carbohydrate = Nutrient.createFromKCal(Carbohydrate, part * 4.5f)
 
         return NutrientsResult(protein, fat, carbohydrate)
     }
