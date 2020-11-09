@@ -21,16 +21,19 @@ class EventEntity {
     open lateinit var name: String
 
     @Column(name = "carb", nullable = false)
-    var carbohydrates: Float = 0.0f
+    var carb: Float = 0.0f
 
     @Column(name = "protein", nullable = false)
-    var proteins: Float = 0.0f
+    var protein: Float = 0.0f
 
     @Column(name = "fat", nullable = false)
-    var fats: Float = 0.0f
+    var fat: Float = 0.0f
 
     @Column(name = "k_cal", nullable = false)
     var kCal: Float = 0.0f
+
+    @Column(name = "weight_gram", nullable = false)
+    var weightGram: Float = 0f
 
     @Column(name = "is_removed")
     open var isRemoved: Boolean = false

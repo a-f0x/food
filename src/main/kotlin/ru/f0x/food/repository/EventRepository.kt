@@ -1,0 +1,6 @@
+package ru.f0x.food.repository
+
+import org.springframework.data.repository.CrudRepository
+import ru.f0x.food.models.entity.EventEntity
+
+interface EventRepository : CrudRepository<EventEntity, Int>

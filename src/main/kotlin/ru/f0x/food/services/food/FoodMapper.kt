@@ -3,11 +3,16 @@ package ru.f0x.food.services.food
 import org.springframework.stereotype.Component
 import ru.f0x.food.models.dto.food.FoodProductDTO
 import ru.f0x.food.models.entity.FoodEntity
+import ru.f0x.food.services.IDateTimeService
 
 @Component
-class FoodMapper {
+class FoodMapper(
+        private val dateTimeService: IDateTimeService
+) {
 
     fun <T : FoodProductDTO> mapFromDTO(dto: T): FoodEntity {
+
+        val currentTime = getCurrentTime()
         return FoodEntity().apply {
             id = dto.id ?: 0
             name = dto.name
@@ -32,4 +37,6 @@ class FoodMapper {
                 entity.kCal
         )
     }
+
+    private fun getCurrentTime() = dateTimeService.getCurrentTime()
 }
