@@ -16,6 +16,7 @@ import ru.f0x.food.createValidationErrorResponseEntity
 import ru.f0x.food.exceptions.FoodProductNotFoundException
 import ru.f0x.food.exceptions.NotAcceptableDataException
 import ru.f0x.food.models.dto.ResponseDTO
+import java.lang.reflect.UndeclaredThrowableException
 
 @ControllerAdvice
 class MvcExceptionHandler : ResponseEntityExceptionHandler() {
@@ -43,12 +44,19 @@ class MvcExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(FoodProductNotFoundException::class)
     fun handleNutrientNotFoundException(ex: FoodProductNotFoundException): ResponseEntity<ResponseDTO<Any>> {
-        logger.error("Contact not found.", ex)
+        logger.error("Food not found.", ex)
         return ex.createNotFoundErrorResponseEntity()
     }
 
     @ExceptionHandler(Throwable::class)
-    fun handleThrowable(t: Throwable): ResponseEntity<Any> {
+    fun handleThrowable(t: Throwable): ResponseEntity<*> {
+        if (t is UndeclaredThrowableException) {
+            val ex = t.undeclaredThrowable
+            if (ex is NotAcceptableDataException) {
+                return handleNotAcceptableDataException(ex)
+            }
+        }
+
         logger.error(INTERNAL_SERVER_ERROR, t)
         return createInternalServerErrorResponseEntity("$INTERNAL_SERVER_ERROR. ${t.message ?: UNKNOWN_ERROR}")
     }

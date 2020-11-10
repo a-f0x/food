@@ -7,9 +7,7 @@ sealed class Event(
         val name: String,
         val type: EventTypeEnum,
         val time: LocalDateTime,
-        val kCal: Float,
-
-        )
+        val kCal: Float)
 
 class FoodEvent(
         name: String,

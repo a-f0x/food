@@ -1,6 +1,6 @@
 package ru.f0x.food.services.calculator
 
-import ru.f0x.food.models.dto.calculator.CalculationResult
+import ru.f0x.food.models.dto.calculator.TargetCalculationResult
 import ru.f0x.food.models.entity.ActivityEnum
 import ru.f0x.food.models.entity.SexEnum
 import ru.f0x.food.models.entity.TargetEnum
@@ -16,18 +16,17 @@ class TargetCalculator(
         private val sex: SexEnum
 ) : ITargetCalculator {
 
-    override fun calculate(target: TargetEnum): CalculationResult {
+    override fun calculate(target: TargetEnum): TargetCalculationResult {
         val basicKCal = calculateBasicMetabolismKCal()
-
         val nutrientResult = when (sex) {
             SexEnum.FEMALE -> {
-                FemaleNutrientsCalculator(basicKCal * getTargetCaloriesRate(target)).calculate()
+                calculateFemaleNutrientResult(basicKCal * getTargetCaloriesRate(target))
             }
             SexEnum.MALE -> {
-                MaleNutrientsCalculator(basicKCal * getTargetCaloriesRate(target)).calculate()
+                calculateMaleNutrientResult(basicKCal * getTargetCaloriesRate(target))
             }
         }
-        return CalculationResult(
+        return TargetCalculationResult(
                 target,
                 basicKCal,
                 nutrientResult

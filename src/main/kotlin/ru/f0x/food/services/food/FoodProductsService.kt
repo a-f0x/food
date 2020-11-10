@@ -2,6 +2,7 @@ package ru.f0x.food.services.food
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import ru.f0x.food.getOrNull
 import ru.f0x.food.models.dto.CustomUserDetails
 import ru.f0x.food.models.dto.food.FoodProductDTO
 import ru.f0x.food.repository.FoodRepository
@@ -69,6 +70,12 @@ class FoodProductsService(
 
     override fun delete(ids: List<Int>) {
         foodRepository.deleteAllByIdIn(ids)
+    }
+
+    override fun getById(id: Int): FoodProductDTO? {
+        return foodRepository.findById(id).getOrNull()?.let {
+            mapper.mapFromEntity(it)
+        }
     }
 
     private fun getCurrentTime() = dateTimeService.getCurrentTime()

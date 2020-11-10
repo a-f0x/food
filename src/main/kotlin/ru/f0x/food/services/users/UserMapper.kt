@@ -8,7 +8,7 @@ import ru.f0x.food.models.dto.users.UserProfileDTO
 import ru.f0x.food.models.entity.RoleEntity
 import ru.f0x.food.models.entity.UserEntity
 import ru.f0x.food.models.entity.UserProfileEntity
-import ru.f0x.food.services.calculator.TargetCalculator
+import ru.f0x.food.services.calculator.calculateTargetForUserProfile
 import java.time.LocalDateTime
 
 @Component
@@ -56,13 +56,7 @@ class UserMapper {
 
 
     private fun calculateNutrients(profile: UserProfileEntity): CalcResult {
-        val result = TargetCalculator(
-                profile.weight,
-                profile.height,
-                profile.age,
-                profile.activity,
-                profile.sex
-        ).calculate(profile.target)
+        val result = profile.calculateTargetForUserProfile()
 
         val proteins = NutrientsResponse(
                 result.nutrients.protein.name,

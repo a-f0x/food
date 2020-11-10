@@ -1,9 +1,16 @@
 package ru.f0x.food.services.events
 
 import org.springframework.stereotype.Component
-import ru.f0x.food.models.dto.event.*
+import ru.f0x.food.models.dto.event.CreateEventForFoodDTO
+import ru.f0x.food.models.dto.event.CreateEventForWorkoutDTO
+import ru.f0x.food.models.dto.event.EventResultDTO
+import ru.f0x.food.models.dto.food.FoodProductDTO
 import ru.f0x.food.models.entity.EventEntity
 import ru.f0x.food.models.entity.EventTypeEnum
+import ru.f0x.food.models.entity.FoodEventEntity
+import ru.f0x.food.models.entity.UserProfileEntity
+import ru.f0x.food.services.calculator.calculateEventSum
+import ru.f0x.food.services.calculator.calculateTargetForUserProfile
 import java.time.LocalDateTime
 
 @Component
@@ -12,23 +19,13 @@ class EventMapper {
     fun createEntityForFood(
             userId: Int,
             dto: CreateEventForFoodDTO,
+            food: FoodProductDTO,
+            foodEventEntity: FoodEventEntity,
             createdTime: LocalDateTime): EventEntity {
 
-        val nutrients = dto.food.getNutrients(dto.weightGram)
+        val nutrients = food.getNutrients(dto.weightGram)
 
-        return EventEntity().apply {
-            this.type = EventTypeEnum.FOOD
-            this.userId = userId
-            this.kCal = nutrients.totalKCal
-            this.protein = nutrients.protein.weightGram
-            this.fat = nutrients.fat.weightGram
-            this.carb = nutrients.carb.weightGram
-            this.weightGram = dto.weightGram
-            this.name = dto.food.name
-            this.userTime = dto.time
-            this.created = createdTime
-        }
-
+        return
     }
 
     fun createEntityForWorkout(userId: Int, dto: CreateEventForWorkoutDTO, createdTime: LocalDateTime): EventEntity {
@@ -42,26 +39,44 @@ class EventMapper {
         }
     }
 
+    fun createResult(profile: UserProfileEntity, start: LocalDateTime, end: LocalDateTime, events: List<EventEntity>): EventResultDTO {
+        val targetResult = profile.calculateTargetForUserProfile()
+        val eventSum = events.calculateEventSum()
 
-    fun mapFromEntity(entity: EventEntity): Event {
-        return when (entity.type) {
-            EventTypeEnum.FOOD -> FoodEvent(
-                    entity.name,
-                    entity.userTime,
-                    entity.kCal,
-                    entity.protein,
-                    entity.fat,
-                    entity.carb,
-                    entity.weightGram
+        val currentProtein = eventSum.totalProtein
+        val targetProtein = targetResult.nutrients.protein.weightGram
+        val progressProteinPercent = calcPercentProgress(currentProtein, targetProtein)
 
-            )
+        val currentFat = eventSum.totalFat
+        val targetFat = targetResult.nutrients.fat.weightGram
+        val progressFat = calcPercentProgress(currentFat, targetFat)
 
-            EventTypeEnum.WORKOUT -> WorkoutEvent(
-                    entity.name,
-                    entity.userTime,
-                    entity.kCal
-            )
-        }
+        val currentCarb = eventSum.totalCarb
+        val targetCarb = targetResult.nutrients.carb.weightGram
+        val progressCarb = calcPercentProgress(currentCarb, targetCarb)
+
+        val currentKCal = eventSum.totalKCal
+        val targetKCal = targetResult.nutrients.totalKCal
+        val progressKCal = calcPercentProgress(currentKCal, targetKCal)
+
+        return EventResultDTO(
+                start,
+                end,
+                targetProtein,
+                currentProtein,
+                progressProteinPercent,
+                targetFat,
+                currentFat,
+                progressFat,
+                targetCarb,
+                currentCarb,
+                progressCarb,
+                targetKCal,
+                currentKCal,
+                progressKCal
+        )
     }
+
+    private fun calcPercentProgress(current: Float, total: Float): Float = current / (total / 100)
 
 }

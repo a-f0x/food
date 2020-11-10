@@ -16,4 +16,6 @@ interface IFoodProductsService {
     fun update(user: CustomUserDetails, foodProductDTO: FoodProductDTO): FoodProductDTO
 
     fun delete(ids: List<Int>)
+
+    fun getById(id: Int): FoodProductDTO?
 }

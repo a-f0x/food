@@ -11,7 +11,7 @@ import ru.f0x.food.getUser
 import ru.f0x.food.models.dto.ResponseDTO
 import ru.f0x.food.models.dto.event.CreateEventForFoodDTO
 import ru.f0x.food.models.dto.event.CreateEventForWorkoutDTO
-import ru.f0x.food.models.dto.event.Event
+import ru.f0x.food.models.dto.event.EventResultDTO
 import ru.f0x.food.services.events.IEventService
 import java.security.Principal
 import javax.validation.Valid
@@ -21,12 +21,12 @@ import javax.validation.Valid
 class EventsController(private val service: IEventService) {
 
     @PostMapping(path = ["/food"], produces = [(MediaType.APPLICATION_JSON_VALUE)], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun addFoodEvent(principal: Principal, @RequestBody @Valid dto: CreateEventForFoodDTO): ResponseEntity<ResponseDTO<Event>> {
+    fun addFoodEvent(principal: Principal, @RequestBody @Valid dto: CreateEventForFoodDTO): ResponseEntity<ResponseDTO<EventResultDTO>> {
         return createSuccessResponseEntity(service.addFoodEvent(principal.getUser().id, dto))
     }
 
     @PostMapping(path = ["/workout"], produces = [(MediaType.APPLICATION_JSON_VALUE)], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun addWorkoutEvent(principal: Principal, @RequestBody @Valid dto: CreateEventForWorkoutDTO): ResponseEntity<ResponseDTO<Event>> {
+    fun addWorkoutEvent(principal: Principal, @RequestBody @Valid dto: CreateEventForWorkoutDTO): ResponseEntity<ResponseDTO<EventResultDTO>> {
         return createSuccessResponseEntity(service.addWorkoutEvent(principal.getUser().id, dto))
     }
 }
