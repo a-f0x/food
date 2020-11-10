@@ -7,8 +7,6 @@ interface IFoodProductsService {
 
     fun findByName(name: String): List<FoodProductDTO>
 
-    fun findByManufacturer(manufacturer: String): List<FoodProductDTO>
-
     fun add(user: CustomUserDetails, foodProduct: FoodProductDTO): FoodProductDTO
 
     fun addAll(user: CustomUserDetails, foodProducts: List<FoodProductDTO>): List<FoodProductDTO>

@@ -44,7 +44,4 @@ class UserProfileEntity {
     @Column(name = "modified", columnDefinition = "TIMESTAMP")
     open lateinit var modified: LocalDateTime
 
-    @Column(name = "gmt")
-    open var gmt: Float = 7f
-
 }

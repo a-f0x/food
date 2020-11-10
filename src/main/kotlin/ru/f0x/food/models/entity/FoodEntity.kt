@@ -25,19 +25,16 @@ class FoodEntity {
     @Column(name = "name", unique = true, nullable = false)
     lateinit var name: String
 
-    @Column(name = "manufacturer", nullable = false)
-    var manufacturer: String = "Unknown"
+    @Column(name = "carb", nullable = false)
+    var carb: Float = 0.0f
 
-    @Column(name = "carbohydrates", nullable = false)
-    var carbohydrates: Float = 0.0f
+    @Column(name = "protein", nullable = false)
+    var protein: Float = 0.0f
 
-    @Column(name = "proteins", nullable = false)
-    var proteins: Float = 0.0f
+    @Column(name = "fat", nullable = false)
+    var fat: Float = 0.0f
 
-    @Column(name = "fats", nullable = false)
-    var fats: Float = 0.0f
-
-    @Column(name = "kcal", nullable = false)
+    @Column(name = "k_cal", nullable = false)
     var kCal: Float = 0.0f
 
     @Column(name = "created", columnDefinition = "TIMESTAMP")

@@ -19,12 +19,6 @@ class FoodProductsService(
                 mapper.mapFromEntity(it)
             }
 
-    override fun findByManufacturer(manufacturer: String): List<FoodProductDTO> =
-            foodRepository.findAllByManufacturer(manufacturer)
-                    .map {
-                        mapper.mapFromEntity(it)
-                    }
-
     @Transactional
     override fun add(user: CustomUserDetails, foodProduct: FoodProductDTO): FoodProductDTO {
         val currentTime = getCurrentTime()

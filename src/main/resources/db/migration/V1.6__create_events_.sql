@@ -17,6 +17,7 @@ CREATE TABLE events
 
 CREATE INDEX idx_over_event_type ON events (event_type);
 CREATE INDEX idx_over_user_id ON events (user_id);
-CREATE INDEX idx_over_name_id ON events (name);
+CREATE INDEX idx_over_name ON events (name);
+CREATE INDEX idx_over_user_time ON events (user_time);
 
 

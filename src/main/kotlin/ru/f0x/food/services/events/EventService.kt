@@ -1,8 +1,9 @@
 package ru.f0x.food.services.events
 
 import org.springframework.stereotype.Service
+import ru.f0x.food.models.dto.event.CreateEventForFoodDTO
+import ru.f0x.food.models.dto.event.CreateEventForWorkoutDTO
 import ru.f0x.food.models.dto.event.Event
-import ru.f0x.food.models.dto.food.FoodProductDTO
 import ru.f0x.food.repository.EventRepository
 import ru.f0x.food.services.IDateTimeService
 import java.time.LocalDateTime
@@ -14,36 +15,29 @@ class EventService(
         private val dateTimeService: IDateTimeService
 ) : IEventService {
 
-
-    override fun addEatingEvent(userId: Int, food: FoodProductDTO, weightGram: Float): Event {
-        val currentTime = dateTimeService.getCurrentTime()
-        val userTime = currentTime
-
+    override fun addFoodEvent(userId: Int, dto: CreateEventForFoodDTO): Event {
         return mapper.mapFromEntity(
                 repository.save(
-                        mapper.createEntityForEating(
+                        mapper.createEntityForFood(
                                 userId,
-                                userTime,
-                                currentTime,
-                                food,
-                                weightGram
+                                dto,
+                                currentTime()
                         )
                 )
         )
     }
 
-    override fun addWorkoutEvent(userId: Int, kCal: Float): Event {
+    override fun addWorkoutEvent(userId: Int, dto: CreateEventForWorkoutDTO): Event {
         return mapper.mapFromEntity(
                 repository.save(
-                        mapper.createEntityForWorkout(userId, kCal)
+                        mapper.createEntityForWorkout(
+                                userId,
+                                dto,
+                                currentTime()
+                        )
                 )
         )
     }
-
-    private fun userTime(): LocalDateTime {
-
-    }
-
 
     private fun currentTime(): LocalDateTime = dateTimeService.getCurrentTime()
 

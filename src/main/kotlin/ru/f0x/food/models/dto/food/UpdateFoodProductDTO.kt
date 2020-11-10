@@ -6,17 +6,15 @@ import ru.f0x.food.validators.food.CorrectUpdateFoodProduct
 class UpdateFoodProductDTO(
         override val id: Int,
         name: String,
-        manufacturer: String?,
-        carbohydrates: Float,
-        proteins: Float,
-        fats: Float,
-        kiloCal: Float
+        carb: Float,
+        protein: Float,
+        fat: Float,
+        kCal: Float
 ) : FoodProductDTO(
         id,
         name,
-        manufacturer,
-        carbohydrates,
-        proteins,
-        fats,
-        kiloCal
+        carb,
+        protein,
+        fat,
+        kCal
 )

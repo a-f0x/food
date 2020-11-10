@@ -5,17 +5,15 @@ import ru.f0x.food.validators.food.CorrectCreateFoodProduct
 @CorrectCreateFoodProduct
 class CreateFoodProductDTO(
         name: String,
-        manufacturer: String?,
-        carbohydrates: Float,
-        proteins: Float,
+        carb: Float,
+        protein: Float,
         fats: Float,
-        kiloCal: Float
+        kCal: Float
 ) : FoodProductDTO(
         null,
         name,
-        manufacturer,
-        carbohydrates,
-        proteins,
+        carb,
+        protein,
         fats,
-        kiloCal
+        kCal
 )

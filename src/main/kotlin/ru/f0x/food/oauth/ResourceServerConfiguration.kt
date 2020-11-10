@@ -16,7 +16,7 @@ open class ResourceServerConfiguration : ResourceServerConfigurerAdapter() {
         http
                 .requestMatchers().antMatchers("/**")
                 .and().authorizeRequests()
-                .antMatchers("/api/v1/target**").access("hasRole('USER')")
+                .antMatchers("/api/v1/events/**").access("hasRole('USER')")
                 .antMatchers("/api/v1/user/**").access("hasRole('USER')")
                 .antMatchers(HttpMethod.POST, "/api/v1/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/food/**").permitAll()

@@ -4,7 +4,6 @@ CREATE TABLE food
     created_by_user_id  INT            NOT NULL,
     modified_by_user_id INT            NOT NULL,
     name                VARCHAR(255)   NOT NULL,
-    manufacturer        VARCHAR(255)   NOT NULL DEFAULT 'Unknown',
     carb                NUMERIC(10, 2) NOT NULL DEFAULT 0.0,
     protein             NUMERIC(10, 2) NOT NULL DEFAULT 0.0,
     fat                 NUMERIC(10, 2) NOT NULL DEFAULT 0.0,
@@ -15,4 +14,4 @@ CREATE TABLE food
     FOREIGN KEY (modified_by_user_id) REFERENCES users (id)
 );
 CREATE UNIQUE INDEX on food (name);
-CREATE INDEX on food (manufacturer);
+

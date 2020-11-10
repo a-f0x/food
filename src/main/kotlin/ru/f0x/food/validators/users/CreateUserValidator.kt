@@ -3,6 +3,7 @@ package ru.f0x.food.validators.users
 import ru.f0x.food.models.dto.users.CreateUserDTO
 import ru.f0x.food.services.users.IUserService
 import ru.f0x.food.validators.*
+import ru.f0x.food.validators.food.BaseValidator
 import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass
@@ -18,10 +19,11 @@ annotation class CorrectCreateUser(
 
 
 class CreateUserValidator(
+        baseValidator: BaseValidator,
         private val service: IUserService,
         private val emailValidator: IEmailValidator,
         private val profileValidator: ProfileValidator
-) : AbstractValidator<CorrectCreateUser, CreateUserDTO>() {
+) : AbstractConstraintValidator<CorrectCreateUser, CreateUserDTO>(baseValidator) {
     private companion object {
 
         private const val EMAIL_KEY = "email"

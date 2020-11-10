@@ -4,28 +4,25 @@ import ru.f0x.food.models.entity.EventTypeEnum
 import java.time.LocalDateTime
 
 sealed class Event(
-        val type: EventTypeEnum,
         val name: String,
-        val weightGram: Float,
+        val type: EventTypeEnum,
+        val time: LocalDateTime,
         val kCal: Float,
+
+        )
+
+class FoodEvent(
+        name: String,
+        time: LocalDateTime,
+        kCal: Float,
         val protein: Float,
         val fat: Float,
         val carb: Float,
-        val time: LocalDateTime
-)
-
-class EatingEvent(
-        name: String,
-        weightGram: Float,
-        kCal: Float,
-        protein: Float,
-        fat: Float,
-        carb: Float,
-        time: LocalDateTime
-) : Event(EventTypeEnum.EATING, name, weightGram, kCal, protein, fat, carb, time)
+        val weightGram: Float
+) : Event(name, EventTypeEnum.FOOD, time, kCal)
 
 class WorkoutEvent(
         name: String,
-        kCal: Float,
-        time: LocalDateTime
-) : Event(EventTypeEnum.WORKOUT, name, kCal, 0f, 0f, 0f, 0f, time)
+        time: LocalDateTime,
+        kCal: Float
+) : Event(name, EventTypeEnum.WORKOUT, time, kCal)
