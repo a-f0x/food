@@ -6,5 +6,5 @@ import java.time.LocalDateTime
 
 interface EventRepository : CrudRepository<EventEntity, Int> {
 
-    fun findAllByUserTimeBetween(startDate: LocalDateTime, endDate: LocalDateTime): List<EventEntity>
+    fun findByUserIdAndUserTimeBetweenOrderByUserTime(userId: Int, startDate: LocalDateTime, endDate: LocalDateTime): List<EventEntity>
 }

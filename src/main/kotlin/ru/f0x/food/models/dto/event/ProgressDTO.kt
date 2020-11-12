@@ -1,10 +1,9 @@
 package ru.f0x.food.models.dto.event
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 
-data class EventResultDTO(
-        val startTime: LocalDateTime,
-        val endTime: LocalDateTime,
+data class ProgressDTO(
+        val onDate: LocalDate,
         val targetProteinWeightGram: Float,
         val currentProteinWeightGram: Float,
         val progressProteinPercent: Float,

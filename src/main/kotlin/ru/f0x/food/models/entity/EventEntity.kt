@@ -60,5 +60,9 @@ class EventEntity {
 
     }
 
-
+    fun getFoodWeightGram(): Float {
+        if (type == EventTypeEnum.WORKOUT)
+            return 0f
+        return foodEvent!!.weightGram
+    }
 }

@@ -6,7 +6,9 @@ import ru.f0x.food.exceptions.NotAcceptableDataException
 import ru.f0x.food.getOrNull
 import ru.f0x.food.models.dto.event.CreateEventForFoodDTO
 import ru.f0x.food.models.dto.event.CreateEventForWorkoutDTO
-import ru.f0x.food.models.dto.event.EventResultDTO
+import ru.f0x.food.models.dto.event.EventsResultDTO
+import ru.f0x.food.models.dto.event.ProgressDTO
+import ru.f0x.food.models.entity.EventEntity
 import ru.f0x.food.models.entity.EventTypeEnum
 import ru.f0x.food.models.entity.FoodEventEntity
 import ru.f0x.food.repository.EventRepository
@@ -15,6 +17,7 @@ import ru.f0x.food.repository.FoodRepository
 import ru.f0x.food.repository.UserProfileRepository
 import ru.f0x.food.services.IDateTimeService
 import ru.f0x.food.validators.NOT_FOUND_BY_ID
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
@@ -30,7 +33,7 @@ class EventService(
 
 
     @Transactional
-    override fun addFoodEvent(userId: Int, dto: CreateEventForFoodDTO): EventResultDTO {
+    override fun addFoodEvent(userId: Int, dto: CreateEventForFoodDTO): ProgressDTO {
 
         val foodEntity = foodRepository.findById(dto.foodId).getOrNull() ?: throw NotAcceptableDataException(dto,
                 mapOf("food_id" to String.format(NOT_FOUND_BY_ID, dto.foodId))
@@ -55,11 +58,11 @@ class EventService(
                     foodEvent = foodEventEntity
                 }
         )
-        return createResult(userId, dto.time)
+        return createResult(userId, dto.time.toLocalDate())
     }
 
     @Transactional
-    override fun addWorkoutEvent(userId: Int, dto: CreateEventForWorkoutDTO): EventResultDTO {
+    override fun addWorkoutEvent(userId: Int, dto: CreateEventForWorkoutDTO): ProgressDTO {
         eventsRepository.save(
                 eventMapper.createEventEntity(
                         dto.name,
@@ -70,15 +73,22 @@ class EventService(
                         dto.kCal
                 )
         )
-        return createResult(userId, dto.time)
+        return createResult(userId, dto.time.toLocalDate())
     }
 
-    private fun createResult(userId: Int, time: LocalDateTime): EventResultDTO {
-        val profile = profile(userId)
-        val start = time.toLocalDate().atStartOfDay()
-        val end = LocalDateTime.of(time.toLocalDate(), LocalTime.MAX)
-        val eventsPerDay = eventsRepository.findAllByUserTimeBetween(start, end)
-        return eventMapper.createResult(profile, start, end, eventsPerDay)
+    override fun getEventsBetweenDate(userId: Int, start: LocalDate, end: LocalDate): EventsResultDTO =
+            eventMapper.createEventsResult(profile(userId), getBetweenDates(userId, start, end))
+
+    private fun getBetweenDates(userId: Int, start: LocalDate, end: LocalDate): List<EventEntity> =
+            eventsRepository.findByUserIdAndUserTimeBetweenOrderByUserTime(
+                    userId,
+                    start.atStartOfDay(),
+                    LocalDateTime.of(end, LocalTime.MAX)
+            )
+
+    private fun createResult(userId: Int, eventUserDate: LocalDate): ProgressDTO {
+        val eventsPerDay = getBetweenDates(userId, eventUserDate, eventUserDate)
+        return eventMapper.createResult(eventUserDate, profile(userId), eventsPerDay)
     }
 
     private fun profile(userId: Int) = profileRepository.findByUserId(userId)

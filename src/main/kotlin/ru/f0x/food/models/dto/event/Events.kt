@@ -3,7 +3,7 @@ package ru.f0x.food.models.dto.event
 import ru.f0x.food.models.entity.EventTypeEnum
 import java.time.LocalDateTime
 
-sealed class Event(
+open class Event(
         val name: String,
         val type: EventTypeEnum,
         val time: LocalDateTime,
