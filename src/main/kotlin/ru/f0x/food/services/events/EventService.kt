@@ -7,7 +7,6 @@ import ru.f0x.food.getOrNull
 import ru.f0x.food.models.dto.event.CreateEventForFoodDTO
 import ru.f0x.food.models.dto.event.CreateEventForWorkoutDTO
 import ru.f0x.food.models.dto.event.EventResultDTO
-import ru.f0x.food.models.entity.EventEntity
 import ru.f0x.food.models.entity.EventTypeEnum
 import ru.f0x.food.models.entity.FoodEventEntity
 import ru.f0x.food.repository.EventRepository
@@ -15,7 +14,6 @@ import ru.f0x.food.repository.FoodEventRepository
 import ru.f0x.food.repository.FoodRepository
 import ru.f0x.food.repository.UserProfileRepository
 import ru.f0x.food.services.IDateTimeService
-import ru.f0x.food.services.food.FoodMapper
 import ru.f0x.food.validators.NOT_FOUND_BY_ID
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -27,43 +25,35 @@ class EventService(
         private val dateTimeService: IDateTimeService,
         private val profileRepository: UserProfileRepository,
         private val foodRepository: FoodRepository,
-        private val foodFoodEventRepository: FoodEventRepository,
-        private val foodMapper: FoodMapper
+        private val foodFoodEventRepository: FoodEventRepository
 ) : IEventService {
 
 
     @Transactional
     override fun addFoodEvent(userId: Int, dto: CreateEventForFoodDTO): EventResultDTO {
+
         val foodEntity = foodRepository.findById(dto.foodId).getOrNull() ?: throw NotAcceptableDataException(dto,
                 mapOf("food_id" to String.format(NOT_FOUND_BY_ID, dto.foodId))
         )
-        val eventEntity = EventEntity().apply {
-            this.type = EventTypeEnum.FOOD
-            this.userId = userId
-            this.kCal = 100500f
-            this.name = dto.name
-            this.userTime = dto.time
-            this.created = createdTime
-            this.foodEvent = foodEventEntity
-        }
-
 
         val foodEventEntity = foodFoodEventRepository.save(
                 FoodEventEntity().apply {
                     this.weightGram = dto.weightGram
                     this.food = foodEntity
-                    this.eventId
                 }
         )
-
+        val kCal = (foodEntity.kCal / 100) * dto.weightGram
         eventsRepository.save(
-                eventMapper.createEntityForFood(
+                eventMapper.createEventEntity(
+                        dto.name,
+                        dto.time,
+                        currentTime(),
+                        EventTypeEnum.FOOD,
                         userId,
-                        dto,
-                        foodMapper.mapFromEntity(foodEntity),
-                        foodEventEntity,
-                        currentTime()
-                )
+                        kCal
+                ).apply {
+                    foodEvent = foodEventEntity
+                }
         )
         return createResult(userId, dto.time)
     }
@@ -71,10 +61,13 @@ class EventService(
     @Transactional
     override fun addWorkoutEvent(userId: Int, dto: CreateEventForWorkoutDTO): EventResultDTO {
         eventsRepository.save(
-                eventMapper.createEntityForWorkout(
+                eventMapper.createEventEntity(
+                        dto.name,
+                        dto.time,
+                        currentTime(),
+                        EventTypeEnum.WORKOUT,
                         userId,
-                        dto,
-                        currentTime()
+                        dto.kCal
                 )
         )
         return createResult(userId, dto.time)
@@ -87,7 +80,6 @@ class EventService(
         val eventsPerDay = eventsRepository.findAllByUserTimeBetween(start, end)
         return eventMapper.createResult(profile, start, end, eventsPerDay)
     }
-
 
     private fun profile(userId: Int) = profileRepository.findByUserId(userId)
 

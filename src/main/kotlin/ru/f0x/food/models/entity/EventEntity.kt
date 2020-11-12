@@ -28,11 +28,8 @@ class EventEntity {
     @Column(name = "event_type", length = 64, nullable = false)
     lateinit var type: EventTypeEnum
 
-    @JoinTable(
-            name = "food_events",
-            foreignKey = "event_id"
-    )
     @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "food_event_id", referencedColumnName = "id", nullable = true)
     open var foodEvent: FoodEventEntity? = null
 
     @Column(name = "is_removed")
@@ -43,6 +40,25 @@ class EventEntity {
 
     @Column(name = "user_time", columnDefinition = "TIMESTAMP", nullable = false)
     open lateinit var userTime: LocalDateTime
+
+    fun getProteinWeightGram(): Float {
+        if (type == EventTypeEnum.WORKOUT)
+            return 0f
+        return foodEvent!!.weightGram * (foodEvent!!.food.protein / 100)
+    }
+
+    fun getFatWeightGram(): Float {
+        if (type == EventTypeEnum.WORKOUT)
+            return 0f
+        return foodEvent!!.weightGram * (foodEvent!!.food.fat / 100)
+    }
+
+    fun getCarbWeightGram(): Float {
+        if (type == EventTypeEnum.WORKOUT)
+            return 0f
+        return foodEvent!!.weightGram * (foodEvent!!.food.carb / 100)
+
+    }
 
 
 }

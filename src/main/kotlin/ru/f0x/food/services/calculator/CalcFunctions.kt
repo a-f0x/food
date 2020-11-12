@@ -59,15 +59,16 @@ fun UserProfileEntity.calculateTargetForUserProfile(): TargetCalculationResult {
     ).calculate(target)
 }
 
-
 fun List<EventEntity>.calculateEventSum(): EventSum {
     var proteinAccumulator = 0F
     var fatAccumulator = 0F
     var carbAccumulator = 0F
     var kCalAccumulator = 0F
+
     forEach { event ->
-        proteinAccumulator += event.foodEvent?.weightGram ?: 0f
-//        fatAccumulator += event.food?.carbAccumulator += event.carb
+        proteinAccumulator += event.getProteinWeightGram()
+        fatAccumulator += event.getFatWeightGram()
+        carbAccumulator += event.getCarbWeightGram()
         kCalAccumulator += if (event.type == EventTypeEnum.WORKOUT) -1 * event.kCal else event.kCal
 
     }

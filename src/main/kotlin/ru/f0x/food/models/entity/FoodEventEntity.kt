@@ -13,13 +13,8 @@ open class FoodEventEntity {
     @Column(name = "weight_gram", nullable = false)
     open var weightGram: Float = 0F
 
-    @JoinTable(
-            name = "food"
-    )
     @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "food_id", referencedColumnName = "id", nullable = false)
     open lateinit var food: FoodEntity
-
-    @Column("event_id")
-    open var eventId: Int = 0
 
 }

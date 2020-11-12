@@ -1,13 +1,9 @@
 package ru.f0x.food.services.events
 
 import org.springframework.stereotype.Component
-import ru.f0x.food.models.dto.event.CreateEventForFoodDTO
-import ru.f0x.food.models.dto.event.CreateEventForWorkoutDTO
 import ru.f0x.food.models.dto.event.EventResultDTO
-import ru.f0x.food.models.dto.food.FoodProductDTO
 import ru.f0x.food.models.entity.EventEntity
 import ru.f0x.food.models.entity.EventTypeEnum
-import ru.f0x.food.models.entity.FoodEventEntity
 import ru.f0x.food.models.entity.UserProfileEntity
 import ru.f0x.food.services.calculator.calculateEventSum
 import ru.f0x.food.services.calculator.calculateTargetForUserProfile
@@ -16,30 +12,26 @@ import java.time.LocalDateTime
 @Component
 class EventMapper {
 
-    fun createEntityForFood(
-            userId: Int,
-            dto: CreateEventForFoodDTO,
-            food: FoodProductDTO,
-            foodEventEntity: FoodEventEntity,
-            createdTime: LocalDateTime): EventEntity {
-
-        val nutrients = food.getNutrients(dto.weightGram)
-
-        return
-    }
-
-    fun createEntityForWorkout(userId: Int, dto: CreateEventForWorkoutDTO, createdTime: LocalDateTime): EventEntity {
+    fun createEventEntity(eventName: String,
+                          eventTime: LocalDateTime,
+                          currentTime: LocalDateTime,
+                          type: EventTypeEnum,
+                          userId: Int,
+                          kCal: Float): EventEntity {
         return EventEntity().apply {
-            this.type = EventTypeEnum.WORKOUT
+            this.type = type
             this.userId = userId
-            this.kCal = dto.kCal
-            this.name = dto.name
-            this.userTime = dto.time
-            this.created = createdTime
+            this.kCal = kCal
+            this.name = eventName
+            this.userTime = eventTime
+            this.created = currentTime
         }
     }
 
-    fun createResult(profile: UserProfileEntity, start: LocalDateTime, end: LocalDateTime, events: List<EventEntity>): EventResultDTO {
+    fun createResult(profile: UserProfileEntity,
+                     start: LocalDateTime,
+                     end: LocalDateTime,
+                     events: List<EventEntity>): EventResultDTO {
         val targetResult = profile.calculateTargetForUserProfile()
         val eventSum = events.calculateEventSum()
 
