@@ -5,6 +5,7 @@ import ru.f0x.food.models.dto.calculator.NutrientsResult
 import ru.f0x.food.models.dto.calculator.TargetCalculationResult
 import ru.f0x.food.models.dto.event.EventSum
 import ru.f0x.food.models.entity.*
+import ru.f0x.food.models.entity.events.EventsReportRowEntity
 
 /**
  * Исходя из пропорции 2,2:2:4,5 получаем: 2,2 + 2 + 4,5 = 8,7 частей.
@@ -59,7 +60,30 @@ fun UserProfileEntity.calculateTargetForUserProfile(): TargetCalculationResult {
     ).calculate(target)
 }
 
-fun List<EventEntity>.calculateEventSum(): EventSum {
+//fun List<EventEntity>.calculateEventSum(): EventSum {
+//    var proteinAccumulator = 0F
+//    var fatAccumulator = 0F
+//    var carbAccumulator = 0F
+//    var kCalAccumulator = 0F
+//
+//    forEach { event ->
+//        proteinAccumulator += event.getProteinWeightGram()
+//        fatAccumulator += event.getFatWeightGram()
+//        carbAccumulator += event.getCarbWeightGram()
+//        kCalAccumulator += if (event.type == EventTypeEnum.WORKOUT) -1 * event.kCal else event.kCal
+//
+//    }
+//    return EventSum(
+//            proteinAccumulator,
+//            fatAccumulator,
+//            carbAccumulator,
+//            kCalAccumulator
+//
+//    )
+//}
+
+
+fun List<EventsReportRowEntity>.calculateEventSum(): EventSum {
     var proteinAccumulator = 0F
     var fatAccumulator = 0F
     var carbAccumulator = 0F
@@ -69,7 +93,7 @@ fun List<EventEntity>.calculateEventSum(): EventSum {
         proteinAccumulator += event.getProteinWeightGram()
         fatAccumulator += event.getFatWeightGram()
         carbAccumulator += event.getCarbWeightGram()
-        kCalAccumulator += if (event.type == EventTypeEnum.WORKOUT) -1 * event.kCal else event.kCal
+        kCalAccumulator += if (event.type == EventTypeEnum.WORKOUT) -1 * event.eventKCal else event.getFoodKCalFromWeightGram()
 
     }
     return EventSum(

@@ -1,5 +1,6 @@
-package ru.f0x.food.models.entity
+package ru.f0x.food.models.entity.events
 
+import ru.f0x.food.models.entity.EventTypeEnum
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -41,28 +42,4 @@ class EventEntity {
     @Column(name = "user_time", columnDefinition = "TIMESTAMP", nullable = false)
     open lateinit var userTime: LocalDateTime
 
-    fun getProteinWeightGram(): Float {
-        if (type == EventTypeEnum.WORKOUT)
-            return 0f
-        return foodEvent!!.weightGram * (foodEvent!!.food.protein / 100)
-    }
-
-    fun getFatWeightGram(): Float {
-        if (type == EventTypeEnum.WORKOUT)
-            return 0f
-        return foodEvent!!.weightGram * (foodEvent!!.food.fat / 100)
-    }
-
-    fun getCarbWeightGram(): Float {
-        if (type == EventTypeEnum.WORKOUT)
-            return 0f
-        return foodEvent!!.weightGram * (foodEvent!!.food.carb / 100)
-
-    }
-
-    fun getFoodWeightGram(): Float {
-        if (type == EventTypeEnum.WORKOUT)
-            return 0f
-        return foodEvent!!.weightGram
-    }
 }

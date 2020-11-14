@@ -1,5 +1,6 @@
-package ru.f0x.food.models.entity
+package ru.f0x.food.models.entity.events
 
+import ru.f0x.food.models.entity.FoodEntity
 import javax.persistence.*
 
 @Entity
