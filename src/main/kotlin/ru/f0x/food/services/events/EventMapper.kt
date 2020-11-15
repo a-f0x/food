@@ -1,7 +1,11 @@
 package ru.f0x.food.services.events
 
 import org.springframework.stereotype.Component
-import ru.f0x.food.models.dto.event.*
+import ru.f0x.food.models.dto.event.Event
+import ru.f0x.food.models.dto.event.EventsPerDay
+import ru.f0x.food.models.dto.event.EventsResultDTO
+import ru.f0x.food.models.dto.event.ProgressDTO
+import ru.f0x.food.models.dto.food.FoodProductEventDTO
 import ru.f0x.food.models.entity.EventTypeEnum
 import ru.f0x.food.models.entity.UserProfileEntity
 import ru.f0x.food.models.entity.events.EventEntity
@@ -10,12 +14,12 @@ import ru.f0x.food.services.calculator.calculateEventSum
 import ru.f0x.food.services.calculator.calculateTargetForUserProfile
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Component
 class EventMapper {
 
-    fun createEventEntity(eventName: String,
-                          eventTime: LocalDateTime,
+    fun createEventEntity(eventTime: LocalDateTime,
                           currentTime: LocalDateTime,
                           type: EventTypeEnum,
                           userId: Int,
@@ -24,7 +28,6 @@ class EventMapper {
             this.type = type
             this.userId = userId
             this.kCal = kCal
-            this.name = eventName
             this.userTime = eventTime
             this.created = currentTime
         }
@@ -38,39 +41,44 @@ class EventMapper {
             val events = mapEntry.value
             EventsPerDay(
                     progress = createProgressResult(date, profile, events),
-                    events = createEvents(events)
+                    event = createEvents(events)
             )
         }.toSortedMap()
 
         return EventsResultDTO(eventsPerDay)
     }
 
-    private fun createEvents(list: List<EventsReportRowEntity>): Map<LocalDateTime, Events> {
-        return list.groupBy { it.groupedByHours }.mapValues {
-            val e = it.value
-            Events("f", LocalDateTime.now(), EventTypeEnum.FOOD, 0f, emptyList()
+    private fun createEvents(list: List<EventsReportRowEntity>): Map<LocalTime, List<Event>> =
+            list.groupBy { it.groupedByHours.toLocalTime() }.mapValues {
+                it.value.groupBy { it.type }.mapValues { entry ->
+                    return@mapValues if (entry.key == EventTypeEnum.WORKOUT) {
+                        var kCal = 0f
+                        entry.value.forEach { row ->
+                            kCal += row.eventKCal
+                        }
+                        Event(entry.key, kCal, null)
+                    } else {
+                        var kCal = 0f
+                        entry.value.forEach { row ->
+                            kCal += row.getFoodKCalFromWeightGram()
+                        }
 
-            )
-        }
-    }
+                        val foodList: List<FoodProductEventDTO> = entry.value.map { row ->
+                            FoodProductEventDTO(
+                                    row.foodId!!,
+                                    row.foodName!!,
+                                    row.getProteinWeightGram(),
+                                    row.getFatWeightGram(),
+                                    row.getCarbWeightGram(),
+                                    row.getFoodKCalFromWeightGram(),
+                                    row.getFoodWeightGram()
+                            )
+                        }
 
-
-    private fun mapToEventFromEntity(entity: EventsReportRowEntity): Event {
-        return when (entity.type) {
-            EventTypeEnum.WORKOUT -> WorkoutEvent(entity.eventName, entity.userTime, -1 * entity.eventKCal)
-            EventTypeEnum.FOOD -> FoodEvent(
-                    entity.eventName,
-                    entity.userTime,
-                    entity.getFoodKCalFromWeightGram(),
-                    entity.getProteinWeightGram(),
-                    entity.getFatWeightGram(),
-                    entity.getCarbWeightGram(),
-                    entity.getFoodWeightGram()
-            )
-        }
-
-    }
-
+                        Event(entry.key, kCal, foodList)
+                    }
+                }.map { it.value }
+            }
 
     fun createProgressResult(onDate: LocalDate, profile: UserProfileEntity, events: List<EventsReportRowEntity>): ProgressDTO {
         val targetResult = profile.calculateTargetForUserProfile()

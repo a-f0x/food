@@ -34,20 +34,20 @@ class EventReportRepository(
                 groupedByHours = (objectArray[0] as Timestamp).toLocalDateTime()
                 id = objectArray[1] as Int
                 this.type = type
-                eventName = objectArray[3] as String
-                eventKCal = (objectArray[4] as BigDecimal).toFloat()
-                userTime = (objectArray[5] as Timestamp).toLocalDateTime()
+
+                eventKCal = (objectArray[3] as BigDecimal).toFloat()
+                userTime = (objectArray[4] as Timestamp).toLocalDateTime()
             }
 
             return@getResultsByFunctions if (type == EventTypeEnum.WORKOUT) e
             else e.apply {
-                foodWeightGram = (objectArray[6] as BigDecimal).toFloat()
-                foodId = objectArray[7] as Int
-                foodName = objectArray[8] as String
-                protein = (objectArray[9] as BigDecimal).toFloat()
-                fat = (objectArray[10] as BigDecimal).toFloat()
-                carb = (objectArray[11] as BigDecimal).toFloat()
-                foodKCal = (objectArray[12] as BigDecimal).toFloat()
+                foodWeightGram = (objectArray[5] as BigDecimal).toFloat()
+                foodId = objectArray[6] as Int
+                foodName = objectArray[7] as String
+                protein = (objectArray[8] as BigDecimal).toFloat()
+                fat = (objectArray[9] as BigDecimal).toFloat()
+                carb = (objectArray[10] as BigDecimal).toFloat()
+                foodKCal = (objectArray[11] as BigDecimal).toFloat()
             }
         }
     }

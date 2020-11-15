@@ -49,7 +49,6 @@ class EventService(
         val kCal = (foodEntity.kCal / 100) * dto.weightGram
         eventsRepository.save(
                 eventMapper.createEventEntity(
-                        dto.name,
                         dto.time,
                         currentTime(),
                         EventTypeEnum.FOOD,
@@ -66,7 +65,6 @@ class EventService(
     override fun addWorkoutEvent(userId: Int, dto: CreateEventForWorkoutDTO): ProgressDTO {
         eventsRepository.save(
                 eventMapper.createEventEntity(
-                        dto.name,
                         dto.time,
                         currentTime(),
                         EventTypeEnum.WORKOUT,

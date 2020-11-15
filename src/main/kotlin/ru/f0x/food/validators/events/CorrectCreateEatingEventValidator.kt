@@ -3,7 +3,6 @@ package ru.f0x.food.validators.events
 import ru.f0x.food.models.dto.event.CreateEventForFoodDTO
 import ru.f0x.food.validators.AbstractConstraintValidator
 import ru.f0x.food.validators.SHOULD_BE_ABOVE_MESSAGE
-import ru.f0x.food.validators.SHOULD_BE_NOT_EMPTY_MESSAGE
 import ru.f0x.food.validators.food.BaseValidator
 import javax.validation.Constraint
 import javax.validation.Payload
@@ -25,10 +24,6 @@ class CreateCorrectFoodEventValidator(baseValidator: BaseValidator)
 
         if (dto.weightGram <= 0)
             errors["weight_gram"] = String.format(SHOULD_BE_ABOVE_MESSAGE, 0)
-
-        if (dto.name.isEmpty())
-            errors["name"] = SHOULD_BE_NOT_EMPTY_MESSAGE
-
         return successResultOrException(errors, dto)
 
     }

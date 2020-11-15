@@ -6,7 +6,6 @@ import java.time.LocalDateTime
 @CreateCorrectFoodEvent
 data class CreateEventForFoodDTO(
         val time: LocalDateTime,
-        val name: String,
         val weightGram: Float,
         val foodId: Int
 )

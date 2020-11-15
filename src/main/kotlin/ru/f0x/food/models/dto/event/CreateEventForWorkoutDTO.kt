@@ -5,7 +5,6 @@ import java.time.LocalDateTime
 
 @CreateCorrectWorkoutEvent
 data class CreateEventForWorkoutDTO(
-        val name: String,
         val time: LocalDateTime,
         val kCal: Float
 )

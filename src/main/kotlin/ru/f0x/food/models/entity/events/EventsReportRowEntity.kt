@@ -19,9 +19,6 @@ class EventsReportRowEntity {
     @Column(name = "e_type")
     lateinit var type: EventTypeEnum
 
-    @Column(name = "e_name")
-    lateinit var eventName: String
-
     @Column(name = "e_kcal")
     var eventKCal: Float = 0f
 
@@ -52,19 +49,26 @@ class EventsReportRowEntity {
     fun getProteinWeightGram(): Float {
         if (type == EventTypeEnum.WORKOUT)
             return 0f
-        return foodWeightGram ?: 0 * (protein ?: 0f / 100)
+
+        val w = foodWeightGram ?: 0f
+        val p = protein ?: 0f
+        return w * (p / 100)
     }
 
     fun getFatWeightGram(): Float {
         if (type == EventTypeEnum.WORKOUT)
             return 0f
-        return foodWeightGram ?: 0 * (fat ?: 0f / 100)
+        val w = foodWeightGram ?: 0f
+        val f = fat ?: 0f
+        return w * (f / 100)
     }
 
     fun getCarbWeightGram(): Float {
         if (type == EventTypeEnum.WORKOUT)
             return 0f
-        return foodWeightGram ?: 0 * (carb ?: 0f / 100)
+        val w = foodWeightGram ?: 0f
+        val c = carb ?: 0f
+        return w * (c / 100)
 
     }
 
@@ -77,7 +81,10 @@ class EventsReportRowEntity {
     fun getFoodKCalFromWeightGram(): Float {
         if (type == EventTypeEnum.WORKOUT)
             return 0f
-        return foodWeightGram ?: 0 * (foodKCal ?: 0f / 100)
+        val w = foodWeightGram ?: 0f
+        val k = foodKCal ?: 0f
+
+        return w * (k / 100)
 
     }
 }

@@ -19,9 +19,6 @@ class EventEntity {
     @Column(name = "user_id", nullable = false)
     open var userId: Int = 0
 
-    @Column(name = "name", nullable = false)
-    open lateinit var name: String
-
     @Column(name = "k_cal", nullable = false)
     var kCal: Float = 0.0f
 
