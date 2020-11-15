@@ -8,7 +8,7 @@ import ru.f0x.food.models.dto.users.UserProfileDTO
 import ru.f0x.food.models.entity.RoleEntity
 import ru.f0x.food.models.entity.UserEntity
 import ru.f0x.food.models.entity.UserProfileEntity
-import ru.f0x.food.services.calculator.TargetCalculator
+import ru.f0x.food.services.calculator.calculateTargetForUserProfile
 import java.time.LocalDateTime
 
 @Component
@@ -56,31 +56,25 @@ class UserMapper {
 
 
     private fun calculateNutrients(profile: UserProfileEntity): CalcResult {
-        val result = TargetCalculator(
-                profile.weight,
-                profile.height,
-                profile.age,
-                profile.activity,
-                profile.sex
-        ).calculate(profile.target)
+        val result = profile.calculateTargetForUserProfile()
 
         val proteins = NutrientsResponse(
-                result.nutrients.proteins.name,
-                result.nutrients.proteins.weightGram,
-                result.nutrients.proteins.kCal,
-                result.nutrients.proteins.kCalPerGram
+                result.nutrients.protein.name,
+                result.nutrients.protein.weightGram,
+                result.nutrients.protein.kCal,
+                result.nutrients.protein.kCalPerGram
         )
         val fats = NutrientsResponse(
-                result.nutrients.fats.name,
-                result.nutrients.fats.weightGram,
-                result.nutrients.fats.kCal,
-                result.nutrients.fats.kCalPerGram
+                result.nutrients.fat.name,
+                result.nutrients.fat.weightGram,
+                result.nutrients.fat.kCal,
+                result.nutrients.fat.kCalPerGram
         )
         val carbohydrates = NutrientsResponse(
-                result.nutrients.carbohydrates.name,
-                result.nutrients.carbohydrates.weightGram,
-                result.nutrients.carbohydrates.kCal,
-                result.nutrients.carbohydrates.kCalPerGram
+                result.nutrients.carb.name,
+                result.nutrients.carb.weightGram,
+                result.nutrients.carb.kCal,
+                result.nutrients.carb.kCalPerGram
         )
 
         return CalcResult(

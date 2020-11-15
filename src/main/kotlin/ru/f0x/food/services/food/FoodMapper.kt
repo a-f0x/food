@@ -8,16 +8,14 @@ import ru.f0x.food.models.entity.FoodEntity
 class FoodMapper {
 
     fun <T : FoodProductDTO> mapFromDTO(dto: T): FoodEntity {
+
         return FoodEntity().apply {
             id = dto.id ?: 0
             name = dto.name
-            dto.manufacturer?.let {
-                manufacturer = it
-            }
-            carbohydrates = dto.carbohydrates
-            proteins = dto.proteins
-            fats = dto.fats
-            kCal = dto.kiloCal
+            carb = dto.carb
+            protein = dto.protein
+            fat = dto.fat
+            kCal = dto.kCal
         }
     }
 
@@ -25,10 +23,9 @@ class FoodMapper {
         return FoodProductDTO(
                 entity.id,
                 entity.name,
-                entity.manufacturer,
-                entity.carbohydrates,
-                entity.proteins,
-                entity.fats,
+                entity.carb,
+                entity.protein,
+                entity.fat,
                 entity.kCal
         )
     }

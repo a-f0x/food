@@ -44,6 +44,4 @@ open class UserEntity : Serializable {
     override fun toString(): String {
         return "User(id=$id, name=$email,  roles=$roles)"
     }
-
-
 }

@@ -19,7 +19,7 @@ spring:
     password: postgres
 
 server:
-  port: ${SERVER_PORT}
+  port: 8090
 
 web:
   auth:

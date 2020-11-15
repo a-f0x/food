@@ -10,7 +10,8 @@ class CreateUserProfileDTO(
         height: Float,
         age: Int,
         activity: ActivityEnum,
-        target: TargetEnum
+        target: TargetEnum,
+        gmt: Float = 7.0f
 ) : UserProfileDTO(
         id = null,
         sex = sex,
@@ -18,5 +19,6 @@ class CreateUserProfileDTO(
         height = height,
         age = age,
         activity = activity,
-        target = target
+        target = target,
+        gmt
 )

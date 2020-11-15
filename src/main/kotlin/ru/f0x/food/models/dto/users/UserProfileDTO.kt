@@ -11,5 +11,6 @@ open class UserProfileDTO(
         val height: Float,
         val age: Int,
         val activity: ActivityEnum,
-        val target: TargetEnum
+        val target: TargetEnum,
+        val gmt: Float = 7.0f
 )

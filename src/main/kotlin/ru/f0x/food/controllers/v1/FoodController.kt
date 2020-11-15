@@ -38,8 +38,5 @@ class FoodController(private val service: IFoodProductsService) {
     fun searchFoodProductsByName(@RequestParam("query") query: String): ResponseEntity<ResponseDTO<List<FoodProductDTO>>> =
             createSuccessResponseEntity(service.findByName(query))
 
-    @GetMapping(path = ["/search/manufacturer"], produces = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun searchFoodProducstByManufacturer(@RequestParam("query") query: String): ResponseEntity<ResponseDTO<List<FoodProductDTO>>> =
-            createSuccessResponseEntity(service.findByManufacturer(query))
 
 }
