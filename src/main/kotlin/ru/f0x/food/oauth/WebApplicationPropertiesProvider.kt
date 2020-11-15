@@ -1,6 +1,7 @@
-package ru.f0x.food.configuration
+package ru.f0x.food.oauth
 
 import org.springframework.stereotype.Service
+import ru.f0x.food.oauth.configurations.AuthProperties
 
 
 @Service

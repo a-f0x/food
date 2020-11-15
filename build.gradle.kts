@@ -53,6 +53,8 @@ dependencies {
     implementation("com.vladmihalcea:hibernate-types-52:2.7.1")
     implementation("commons-validator:commons-validator:1.4.1")
 
+    implementation("org.telegram:telegrambots-spring-boot-starter:5.0.1")
+
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

@@ -2,11 +2,10 @@ package ru.f0x.food.validators.users
 
 import org.springframework.stereotype.Component
 import ru.f0x.food.models.dto.users.UserProfileDTO
-import ru.f0x.food.services.users.IUserService
 import ru.f0x.food.validators.SHOULD_BE_BETWEEN_IN
 
 @Component
-class ProfileValidator(private val service: IUserService) {
+class ProfileValidator {
     private companion object {
         private val ageRange = (18..100)
         private val heightRange = (150f..220f)

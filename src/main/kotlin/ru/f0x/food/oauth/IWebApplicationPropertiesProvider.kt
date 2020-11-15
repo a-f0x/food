@@ -1,4 +1,4 @@
-package ru.f0x.food.configuration
+package ru.f0x.food.oauth
 
 interface IWebApplicationPropertiesProvider {
 

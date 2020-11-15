@@ -10,4 +10,5 @@ interface UsersRepository : JpaRepository<UserEntity, Int> {
 
     fun existsByEmail(email: String): Boolean
 
+    fun getByTelegramId(telegramId: Int): UserEntity?
 }

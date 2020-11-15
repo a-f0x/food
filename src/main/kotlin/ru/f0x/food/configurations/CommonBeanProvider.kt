@@ -1,4 +1,4 @@
-package ru.f0x.food.configuration
+package ru.f0x.food.configurations
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

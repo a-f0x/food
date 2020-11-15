@@ -11,4 +11,7 @@ interface IUserService {
     fun registerUser(createUserDTO: CreateUserDTO): ProfileResponse
 
     fun getUserProfile(user: CustomUserDetails): ProfileResponse
+
+
+    fun getUserByTelegramId(telegramId: Int): ProfileResponse
 }

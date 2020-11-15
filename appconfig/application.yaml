@@ -30,3 +30,6 @@ web:
     #    Секретный ключ для авторизации
     secret: SeC554KK5
 
+bot:
+  token: ${BOT_TOKEN}
+  botName: ${BOT_NAME}

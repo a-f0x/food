@@ -14,9 +14,10 @@ import java.time.LocalDateTime
 @Component
 class UserMapper {
 
-    fun mapFromEntity(profile: UserProfileEntity, email: String, password: String?): ProfileResponse {
+    fun mapFromEntity(profile: UserProfileEntity, email: String, password: String?, telegramId: Int?): ProfileResponse {
         val result = calculateNutrients(profile)
         return ProfileResponse(
+                telegramId,
                 password,
                 email,
                 profile.sex,

@@ -1,4 +1,4 @@
-package ru.f0x.food.oauth
+package ru.f0x.food.oauth.configurations
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean

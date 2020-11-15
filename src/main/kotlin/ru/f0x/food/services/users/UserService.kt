@@ -3,6 +3,7 @@ package ru.f0x.food.services.users
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import ru.f0x.food.exceptions.UserNotFoundException
 import ru.f0x.food.models.dto.CustomUserDetails
 import ru.f0x.food.models.dto.users.CreateUserDTO
 import ru.f0x.food.models.dto.users.ProfileResponse
@@ -46,12 +47,19 @@ class UserService(
         val profile = profileRepository.save(
                 mapper.mapFromDTO(createUserDTO.profile, currentTime, user.id)
         )
-        return mapper.mapFromEntity(profile, user.email, password)
+        return mapper.mapFromEntity(profile, user.email, password, null)
     }
 
     override fun getUserProfile(user: CustomUserDetails): ProfileResponse {
         val profile = profileRepository.findByUserId(user.id)
-        return mapper.mapFromEntity(profile, user.email, null)
+        return mapper.mapFromEntity(profile, user.email, null, null)
+    }
+
+    override fun getUserByTelegramId(telegramId: Int): ProfileResponse {
+        val user = usersRepository.getByTelegramId(telegramId)
+                ?: throw UserNotFoundException("User with telegram id:$telegramId not found.")
+        val profile = profileRepository.findByUserId(user.id)
+        return mapper.mapFromEntity(profile, user.email, null, user.telegramId)
     }
 
     private fun getCurrentTime() = dateTimeService.getCurrentTime()

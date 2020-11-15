@@ -1,4 +1,4 @@
-package ru.f0x.food.configuration
+package ru.f0x.food.oauth.configurations
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component

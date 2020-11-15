@@ -1,4 +1,4 @@
-package ru.f0x.food.oauth
+package ru.f0x.food.oauth.configurations
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler
 import org.springframework.security.oauth2.provider.token.TokenStore
-import ru.f0x.food.configuration.IWebApplicationPropertiesProvider
+import ru.f0x.food.oauth.IWebApplicationPropertiesProvider
 
 @Configuration
 @EnableAuthorizationServer

@@ -1,4 +1,4 @@
-package ru.f0x.food.oauth
+package ru.f0x.food.oauth.configurations
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod

@@ -26,6 +26,9 @@ open class UserEntity : Serializable {
             inverseJoinColumns = [JoinColumn(name = "role_id")])
     open var roles: Set<RoleEntity>? = null
 
+    @Column(name = "telegram_id", nullable = true, unique = true)
+    open var telegramId: Int? = null
+
     constructor()
 
     @Column(name = "created", columnDefinition = "TIMESTAMP")

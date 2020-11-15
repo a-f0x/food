@@ -5,6 +5,7 @@ import ru.f0x.food.models.entity.SexEnum
 import ru.f0x.food.models.entity.TargetEnum
 
 data class ProfileResponse(
+        val telegramId: Int?,
         val password: String?,
         val email: String,
         val sex: SexEnum,
