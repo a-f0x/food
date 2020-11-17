@@ -13,14 +13,7 @@ class CustomUserDetailsService(private val usersRepository: UsersRepository) : U
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String?): UserDetails {
-
-        val usersOptional = usersRepository.findByEmail(username)
-
-        usersOptional.orElseThrow { UsernameNotFoundException("Username not found!") }
-        return usersOptional
-                .map { user -> CustomUserDetails(user) }
-                .get()
+        val user = usersRepository.findByLogin(username) ?: throw UsernameNotFoundException("Username not found!")
+        return CustomUserDetails(user)
     }
-
-
 }

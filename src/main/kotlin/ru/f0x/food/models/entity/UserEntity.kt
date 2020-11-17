@@ -8,6 +8,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "users")
 open class UserEntity : Serializable {
+    constructor()
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +16,7 @@ open class UserEntity : Serializable {
     open var id: Int = 0
 
     @Column(name = "login", unique = true, nullable = false)
-    open lateinit var email: String
+    open lateinit var login: String
 
     @Column(name = "password", nullable = false)
     open lateinit var pwd: String
@@ -26,10 +27,7 @@ open class UserEntity : Serializable {
             inverseJoinColumns = [JoinColumn(name = "role_id")])
     open var roles: Set<RoleEntity>? = null
 
-    @Column(name = "telegram_id", nullable = true, unique = true)
-    open var telegramId: Int? = null
 
-    constructor()
 
     @Column(name = "created", columnDefinition = "TIMESTAMP")
     open lateinit var created: LocalDateTime
@@ -39,12 +37,8 @@ open class UserEntity : Serializable {
 
     constructor(users: UserEntity) {
         this.id = users.id
-        this.email = users.email
+        this.login = users.login
         this.pwd = users.pwd
         this.roles = users.roles
-    }
-
-    override fun toString(): String {
-        return "User(id=$id, name=$email,  roles=$roles)"
     }
 }

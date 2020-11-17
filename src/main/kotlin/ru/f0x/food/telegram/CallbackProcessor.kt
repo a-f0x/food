@@ -3,31 +3,32 @@ package ru.f0x.food.telegram
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.interfaces.BotApiObject
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
+import ru.f0x.food.models.dto.users.Profile
 import ru.f0x.food.telegram.cases.CaseType
 import ru.f0x.food.telegram.cases.ITelegramCase
 
 @Component
 @Suppress("UNCHECKED_CAST")
 class CallbackProcessor(private val cases: Map<CaseType, ITelegramCase>,
-                        private val repo: ITelegramUserStateRepository) {
+                        private val repo: ITelegramUserRegistrationStateRepository) {
 
-    fun <T : BotApiMethod<BotApiObject>> process(userInfo: UserInfo, callbackData: String): T {
-        val cb = MessageCallback.getCallBack(callbackData)
-        val state = getState(userInfo)
-        return when (cb) {
+    fun <T : BotApiMethod<BotApiObject>> process(userInfo: UserInfo, callbackData: String, profile: Profile?): T? {
+        return when (val cb = MessageCallback.getCallBack(callbackData)) {
             is ProfileDecline -> {
-                repo.saveState(state.goTo(CaseType.ON_REGISTRATION_START).apply { profile = null })
-                getCase(CaseType.ON_REGISTRATION_START).process(userInfo, null)
+                val state = getState(userInfo)
+                repo.saveState(state.goTo(CaseType.ON_PROFILE).apply { this.profile = null })
+                getCase(CaseType.ON_PROFILE).process(userInfo, null)
             }
             is ProfileAccept -> {
-                repo.saveState(state.goTo(CaseType.ON_REGISTRATION_FINISHED))
-                getCase(CaseType.ON_REGISTRATION_FINISHED).process(userInfo, null)
+                val state = getState(userInfo)
+                repo.saveState(state.goTo(CaseType.ON_PROFILE_SAVED))
+                getCase(CaseType.ON_PROFILE_SAVED).process(userInfo, null)
             }
-            else -> TODO("state: $state")
+            else -> TODO("cb: $cb")
         }
     }
 
-    private fun getState(info: UserInfo): TelegramUserState = repo.getState(info)
+    private fun getState(info: UserInfo): TelegramUserRegistrationState = repo.getState(info)
 
     private fun getCase(caseType: CaseType): ITelegramCase {
         val case = cases[caseType]

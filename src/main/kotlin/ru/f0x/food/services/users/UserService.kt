@@ -3,10 +3,9 @@ package ru.f0x.food.services.users
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import ru.f0x.food.exceptions.UserNotFoundException
 import ru.f0x.food.models.dto.CustomUserDetails
 import ru.f0x.food.models.dto.users.CreateUserDTO
-import ru.f0x.food.models.dto.users.ProfileResponse
+import ru.f0x.food.models.dto.users.Profile
 import ru.f0x.food.models.entity.RoleEntity
 import ru.f0x.food.models.entity.RoleEnum
 import ru.f0x.food.repository.RolesRepository
@@ -30,10 +29,10 @@ class UserService(
         userRoles.addAll(rolesRepository.findAll())
     }
 
-    override fun isEmailExist(email: String): Boolean = usersRepository.existsByEmail(email)
+    override fun isLoginExist(login: String): Boolean = usersRepository.existsByLogin(login)
 
     @Transactional
-    override fun registerUser(createUserDTO: CreateUserDTO): ProfileResponse {
+    override fun registerUser(createUserDTO: CreateUserDTO): Profile {
         val currentTime = getCurrentTime()
         val password = createUserDTO.password
         val user = usersRepository.save(
@@ -47,20 +46,20 @@ class UserService(
         val profile = profileRepository.save(
                 mapper.mapFromDTO(createUserDTO.profile, currentTime, user.id)
         )
-        return mapper.mapFromEntity(profile, user.email, password, null)
+        return mapper.mapFromEntity(profile)
     }
 
-    override fun getUserProfile(user: CustomUserDetails): ProfileResponse {
+    override fun getUserProfile(user: CustomUserDetails): Profile {
         val profile = profileRepository.findByUserId(user.id)
-        return mapper.mapFromEntity(profile, user.email, null, null)
+        return mapper.mapFromEntity(profile)
     }
 
-    override fun getUserByTelegramId(telegramId: Int): ProfileResponse {
-        val user = usersRepository.getByTelegramId(telegramId)
-                ?: throw UserNotFoundException("User with telegram id:$telegramId not found.")
+    override fun getUserByLogin(login: String): Profile? {
+        val user = usersRepository.findByLogin(login) ?: return null
         val profile = profileRepository.findByUserId(user.id)
-        return mapper.mapFromEntity(profile, user.email, null, user.telegramId)
+        return mapper.mapFromEntity(profile)
     }
+
 
     private fun getCurrentTime() = dateTimeService.getCurrentTime()
 }

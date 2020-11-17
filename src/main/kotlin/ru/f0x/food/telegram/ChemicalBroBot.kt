@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.interfaces.BotApiObject
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup
 import org.telegram.telegrambots.meta.api.objects.Update
-import ru.f0x.food.exceptions.UserNotFoundException
+import ru.f0x.food.models.dto.users.Profile
 import ru.f0x.food.services.users.IUserService
 import ru.f0x.food.telegram.cases.CaseResolver
 import ru.f0x.food.telegram.configurations.TelegramBotProperties
@@ -39,43 +39,42 @@ class ChemicalBroBot(
             return
 
         val info = update.getUserInfo()
-        val profile = try {
-            userService.getUserByTelegramId(info.userId)
-        } catch (unfe: UserNotFoundException) {
-            logger.info("${unfe.message} info: $info")
-            onUpdate(update)
-            return
-        }
+        val profile = userService.getUserByLogin(info.userId.toString())
+        onUpdate(update, profile)
     }
 
-    private fun onUpdate(update: Update) {
+    private fun onUpdate(update: Update, profile: Profile?) {
         if (update.hasCallbackQuery()) {
-            processCallBack(update)
+            processCallBack(update, profile)
             return
+        }
+        val method: BotApiMethod<BotApiObject>? = if (profile == null) {
+            caseResolver.getRegistrationProfileCase(
+                    update.getUserInfo(),
+                    update.getMessageText()
+            )
+        } else {
+            caseResolver.getCase(
+                    update.getUserInfo(),
+                    update.getMessageText(),
+                    profile
+            )
+        }
+        method?.let {
+            sendApiMethodAsync(it)
         }
 
-        val text = update.getMessageText()
-        if (text == "/cancel") {
-            onCancel(update)
-            return
-        }
-        val method: BotApiMethod<BotApiObject> = caseResolver.getCase(update)
-        sendApiMethodAsync(method)
     }
 
-    private fun processCallBack(update: Update) {
+    private fun processCallBack(update: Update, profile: Profile?) {
         val info = update.getUserInfo()
         val callbackData = update.callbackQuery.data
         val mId = update.callbackQuery.message.messageId
         val hideMarkup = EditMessageReplyMarkup(info.cid.toString(), mId, null, null)
         sendApiMethod(hideMarkup)
-        val method: BotApiMethod<BotApiObject> = callbackProcessor.process(info, callbackData)
-        sendApiMethodAsync(method)
-    }
-
-    private fun onCancel(update: Update) {
-        val method: BotApiMethod<BotApiObject> = caseResolver.cancel(update.getUserInfo())
-        sendApiMethodAsync(method)
+        callbackProcessor.process<BotApiMethod<BotApiObject>>(info, callbackData, profile)?.let {
+            sendApiMethodAsync(it)
+        }
 
     }
 

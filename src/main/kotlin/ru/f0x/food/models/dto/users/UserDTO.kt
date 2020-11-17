@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude
 open class UserDTO(
         open val id: Int?,
         open val password: String?,
-        email: String,
+        login: String,
         open val profile: UserProfileDTO?
 ) {
-    val email: String = email
+    val login: String = login
         get() = field.toLowerCase()
 }

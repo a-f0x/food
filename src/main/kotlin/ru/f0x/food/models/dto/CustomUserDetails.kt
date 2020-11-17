@@ -18,7 +18,7 @@ class CustomUserDetails(user: UserEntity) : UserEntity(user), UserDetails {
     }
 
     override fun getUsername(): String? {
-        return super.email
+        return super.login
     }
 
     override fun getPassword(): String? {

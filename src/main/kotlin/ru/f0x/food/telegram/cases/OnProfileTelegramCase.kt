@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.interfaces.BotApiObject
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import ru.f0x.food.models.dto.users.CreateUserProfileDTO
+import ru.f0x.food.models.dto.users.Profile
 import ru.f0x.food.models.entity.ActivityEnum
 import ru.f0x.food.models.entity.SexEnum
 import ru.f0x.food.models.entity.TargetEnum
@@ -12,7 +13,7 @@ import ru.f0x.food.telegram.*
 
 @Suppress("UNCHECKED_CAST")
 @Component
-class OnProfileTelegramCase(private val repository: ITelegramUserStateRepository) : ITelegramCase {
+class OnProfileTelegramCase(private val repository: ITelegramUserRegistrationStateRepository) : ITelegramCase {
 
     private companion object {
         private val ageRange = (18..100)
@@ -41,7 +42,7 @@ class OnProfileTelegramCase(private val repository: ITelegramUserStateRepository
      * 30/180/90/М/2/4
      * */
 
-    override fun <T : BotApiMethod<BotApiObject>> process(userInfo: UserInfo, messageText: String?): T {
+    override fun <T : BotApiMethod<BotApiObject>> process(userInfo: UserInfo, messageText: String?, profile: Profile?): T? {
         checkNotNull(messageText) { "messageText is null for case$type" }
         val cid = userInfo.cid.toString()
         val profile = messageText

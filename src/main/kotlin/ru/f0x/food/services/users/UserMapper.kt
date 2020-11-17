@@ -2,7 +2,7 @@ package ru.f0x.food.services.users
 
 import org.springframework.stereotype.Component
 import ru.f0x.food.models.dto.users.NutrientsResponse
-import ru.f0x.food.models.dto.users.ProfileResponse
+import ru.f0x.food.models.dto.users.Profile
 import ru.f0x.food.models.dto.users.UserDTO
 import ru.f0x.food.models.dto.users.UserProfileDTO
 import ru.f0x.food.models.entity.RoleEntity
@@ -14,12 +14,9 @@ import java.time.LocalDateTime
 @Component
 class UserMapper {
 
-    fun mapFromEntity(profile: UserProfileEntity, email: String, password: String?, telegramId: Int?): ProfileResponse {
+    fun mapFromEntity(profile: UserProfileEntity): Profile {
         val result = calculateNutrients(profile)
-        return ProfileResponse(
-                telegramId,
-                password,
-                email,
+        return Profile(
                 profile.sex,
                 profile.weight,
                 profile.height,
@@ -35,7 +32,7 @@ class UserMapper {
 
     fun mapFromDTO(dto: UserDTO, password: String, time: LocalDateTime, role: RoleEntity): UserEntity =
             UserEntity().apply {
-                this.email = dto.email
+                this.login = dto.login
                 this.pwd = password
                 this.created = time
                 this.modified = time

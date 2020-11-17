@@ -5,12 +5,12 @@ import ru.f0x.food.validators.users.CorrectCreateUser
 @CorrectCreateUser
 class CreateUserDTO(
         password: String,
-        email: String,
+        login: String,
         override val profile: CreateUserProfileDTO
 
 ) : UserDTO(
         id = null,
         password = password,
-        email = email,
+        login = login,
         profile = profile
 )

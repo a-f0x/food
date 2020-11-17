@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 import ru.f0x.food.createSuccessResponseEntity
 import ru.f0x.food.getUser
 import ru.f0x.food.models.dto.ResponseDTO
-import ru.f0x.food.models.dto.users.ProfileResponse
+import ru.f0x.food.models.dto.users.Profile
 import ru.f0x.food.services.users.IUserService
 import java.security.Principal
 
@@ -17,7 +17,7 @@ import java.security.Principal
 class UserController(private val userService: IUserService) {
 
     @GetMapping(path = ["/profile"], produces = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun getProfile(principal: Principal): ResponseEntity<ResponseDTO<ProfileResponse>> {
+    fun getProfile(principal: Principal): ResponseEntity<ResponseDTO<Profile>> {
         return createSuccessResponseEntity(userService.getUserProfile(principal.getUser()))
     }
 
