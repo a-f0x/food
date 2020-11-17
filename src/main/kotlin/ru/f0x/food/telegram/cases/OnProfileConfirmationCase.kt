@@ -14,7 +14,7 @@ import java.util.*
 
 @Suppress("UNCHECKED_CAST")
 @Component
-class OnProfileConfirmationTelegramCase(
+class OnProfileConfirmationCase(
         private val repository: ITelegramUserRegistrationStateRepository,
         private val userService: IUserService
 ) : ITelegramCase {
@@ -27,22 +27,22 @@ class OnProfileConfirmationTelegramCase(
 
     override fun <T : BotApiMethod<BotApiObject>> process(userInfo: UserInfo, messageText: String?, profile: Profile?): T? {
         val state = repository.getState(userInfo)
-        val profile = state.profile ?: return oops(state) as T
+        val createUserProfileDTO = state.profile ?: return oops(state) as T
 
 
         val result = userService.registerUser(
                 CreateUserDTO(
                         password = UUID.randomUUID().toString(),
                         userInfo.userId.toString(),
-                        profile
+                        createUserProfileDTO
                 )
         )
-        return SendMessage(userInfo.cid.toString(), HELLO_MESSAGE) as T
+        return SendMessage(userInfo.cid, HELLO_MESSAGE) as T
     }
 
     private fun oops(state: TelegramUserRegistrationState): SendMessage {
         repository.saveState(state.goTo(CaseType.ON_PROFILE))
-        return SendMessage(state.info.cid.toString(), OOPS_MESSAGE)
+        return SendMessage(state.info.cid, OOPS_MESSAGE)
     }
 
 }

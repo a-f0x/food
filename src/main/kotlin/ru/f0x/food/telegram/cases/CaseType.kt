@@ -13,6 +13,14 @@ enum class CaseType {
 
     ON_PROFILE_SAVED,
 
-    DEFAULT
+    MAIN_MENU,
+
+    EVENTS_MENU,
+
+    ADD_EVENTS_MENU,
+
+    SHOW_PROFILE,
+
+    ADD_WORKOUT_EVENT
 
 }

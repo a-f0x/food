@@ -33,7 +33,7 @@ class ChemicalBroBot(
     override fun getBotUsername(): String = name
 
     override fun onUpdateReceived(update: Update?) {
-        logger.warn("$update")
+//        logger.warn("$update")
         update ?: return
         if (update.message == null && update.hasCallbackQuery().not())
             return
@@ -70,7 +70,7 @@ class ChemicalBroBot(
         val info = update.getUserInfo()
         val callbackData = update.callbackQuery.data
         val mId = update.callbackQuery.message.messageId
-        val hideMarkup = EditMessageReplyMarkup(info.cid.toString(), mId, null, null)
+        val hideMarkup = EditMessageReplyMarkup(info.cid, mId, null, null)
         sendApiMethod(hideMarkup)
         callbackProcessor.process<BotApiMethod<BotApiObject>>(info, callbackData, profile)?.let {
             sendApiMethodAsync(it)

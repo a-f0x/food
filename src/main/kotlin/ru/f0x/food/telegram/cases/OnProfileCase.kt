@@ -13,7 +13,7 @@ import ru.f0x.food.telegram.*
 
 @Suppress("UNCHECKED_CAST")
 @Component
-class OnProfileTelegramCase(private val repository: ITelegramUserRegistrationStateRepository) : ITelegramCase {
+class OnProfileCase(private val repository: ITelegramUserRegistrationStateRepository) : ITelegramCase {
 
     private companion object {
         private val ageRange = (18..100)
@@ -44,7 +44,7 @@ class OnProfileTelegramCase(private val repository: ITelegramUserRegistrationSta
 
     override fun <T : BotApiMethod<BotApiObject>> process(userInfo: UserInfo, messageText: String?, profile: Profile?): T? {
         checkNotNull(messageText) { "messageText is null for case$type" }
-        val cid = userInfo.cid.toString()
+        val cid = userInfo.cid
         val profile = messageText
         val arr = profile.split('/')
 

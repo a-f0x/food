@@ -6,8 +6,23 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
 import ru.f0x.food.models.entity.ActivityEnum
 import ru.f0x.food.models.entity.TargetEnum
+import ru.f0x.food.telegram.cases.CaseType
+
+
+const val MAIN_MENU_MESSAGE_TEXT = "Главное меню"
+const val MAIN_MENU_PROFILE_BUTTON_TEXT = "Профиль"
+const val MAIN_MENU_EVENTS_BUTTON_TEXT = "События"
+const val MAIN_MENU_NOTIFICATIONS_BUTTON_TEXT = "Напоминания"
+const val EVENTS_MENU_ADD_EVENT_BUTTON_TEXT = "Добавить событие"
+const val EVENTS_MENU_SHOW_EVENTS_FOR_LAST_ONE_WEEK_BUTTON_TEXT = "За 7 дней"
+const val EVENTS_MENU_SHOW_EVENTS_FOR_LAST_TWO_WEEKS_BUTTON_TEXT = "За 14 дней"
+const val EVENTS_MENU_SHOW_EVENTS_FOR_LAST_FOUR_WEEKS_BUTTON_TEXT = "За 28 дней"
+const val EVENT_FOOD_BUTTON_TEXT = "Еда"
+const val EVENT_WORKOUT_BUTTON_TEXT = "Тренеровка"
 
 const val PROFILE_PATTERN = "Возраст/Рост/Вес/Пол/Активность/Цель\n"
+
+private const val PROFILE_IS_NULL_ERROR = "For %s case profile should be not null"
 
 val ACTIVITY_TYPES_TEXT = "Виды активности:\n" +
         "1. ${ActivityEnum.MINIMUM.simpleName} - ${ActivityEnum.MINIMUM.description} \n" +
@@ -21,26 +36,20 @@ val TARGET_TYPES = "Цели:\n" +
         "2. ${TargetEnum.GAIN_WEIGHT.simpleName}\n" +
         "3. ${TargetEnum.SAVE_WEIGHT.simpleName}\n"
 
-val PROFILE_MESSAGE = "Заполни профиль\n" +
-        PROFILE_PATTERN +
-        ACTIVITY_TYPES_TEXT +
-        TARGET_TYPES +
-        "Пример для человека в возрасте 30 лет, ростом 180см, весом 90кг, мужского пола со СЛАБОЙ физической активностью и целью  СБРОСИТЬ ВЕС: \n" +
-        "30/180/90/М/2/3\n"
 
 
 fun Update.getUserInfo(): UserInfo {
     if (message != null) {
         return UserInfo(
                 message.from.userName,
-                message.chatId,
+                message.chatId.toString(),
                 message.from.id
         )
     }
     if (hasCallbackQuery()) {
         return UserInfo(
                 callbackQuery.from.userName,
-                callbackQuery.message.chatId,
+                callbackQuery.message.chatId.toString(),
                 callbackQuery.from.id
         )
     }
@@ -70,6 +79,9 @@ fun buildMessageWithButtons(cid: String, messageText: String, buttonsCallback: L
 
 fun Update.getMessageText(): String = message.text
 
+fun getProfileNotNullMessage(caseType: CaseType): String {
+    return String.format(PROFILE_IS_NULL_ERROR, caseType)
+}
 
 
 
