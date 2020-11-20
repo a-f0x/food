@@ -5,16 +5,22 @@ import org.telegram.telegrambots.meta.api.interfaces.BotApiObject
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import ru.f0x.food.models.dto.users.Profile
+import ru.f0x.food.services.users.IUserService
 import ru.f0x.food.telegram.MAIN_MENU_EVENTS_BUTTON_TEXT
 import ru.f0x.food.telegram.MAIN_MENU_MESSAGE_TEXT
 import ru.f0x.food.telegram.UserInfo
+import ru.f0x.food.telegram.buildKeyBoard
 
 @Component
 @Suppress("UNCHECKED_CAST")
-class AddWorkoutCase : BaseMenuCase() {
+class AddWorkoutCase(private val service: IUserService) : BaseMenuCase() {
     override val type: CaseType = CaseType.ADD_WORKOUT_EVENT
 
     override fun <T : BotApiMethod<BotApiObject>> process(userInfo: UserInfo, messageText: String?, profile: Profile?): T? {
+        checkNotNull(profile) { "need profile for this case: $type" }
+        service.goToCase(profile.profileId, type)
+
+
         return SendMessage.builder()
                 .text("Сколько кКал потратил")
                 .replyMarkup(buildKeyBoard(listOf(

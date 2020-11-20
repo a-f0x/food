@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup
 import org.telegram.telegrambots.meta.api.objects.Update
 import ru.f0x.food.models.dto.users.Profile
+import ru.f0x.food.services.IDateTimeService
 import ru.f0x.food.services.users.IUserService
 import ru.f0x.food.telegram.cases.CaseResolver
 import ru.f0x.food.telegram.configurations.TelegramBotProperties
@@ -17,7 +18,8 @@ class ChemicalBroBot(
         botProperties: TelegramBotProperties,
         private val userService: IUserService,
         private val caseResolver: CaseResolver,
-        private val callbackProcessor: CallbackProcessor
+        private val callbackProcessor: CallbackProcessor,
+        private val dateTimeService: IDateTimeService
 
 ) : TelegramLongPollingBot() {
 

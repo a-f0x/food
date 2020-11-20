@@ -21,6 +21,8 @@ enum class CaseType {
 
     SHOW_PROFILE,
 
-    ADD_WORKOUT_EVENT
+    ADD_WORKOUT_EVENT,
+    ON_WORKOUT_KCAL_ENTERED
+
 
 }

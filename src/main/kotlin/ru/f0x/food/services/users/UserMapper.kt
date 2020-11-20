@@ -17,6 +17,9 @@ class UserMapper {
     fun mapFromEntity(profile: UserProfileEntity): Profile {
         val result = calculateNutrients(profile)
         return Profile(
+                profile.userId,
+                profile.id,
+                profile.case,
                 profile.sex,
                 profile.weight,
                 profile.height,

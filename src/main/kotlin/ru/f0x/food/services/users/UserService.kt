@@ -12,6 +12,7 @@ import ru.f0x.food.repository.RolesRepository
 import ru.f0x.food.repository.UserProfileRepository
 import ru.f0x.food.repository.UsersRepository
 import ru.f0x.food.services.IDateTimeService
+import ru.f0x.food.telegram.cases.CaseType
 
 @Service
 class UserService(
@@ -58,6 +59,11 @@ class UserService(
         val user = usersRepository.findByLogin(login) ?: return null
         val profile = profileRepository.findByUserId(user.id)
         return mapper.mapFromEntity(profile)
+    }
+
+    @Transactional
+    override fun goToCase(profileId: Int, case: CaseType) {
+        profileRepository.setCase(profileId, case)
     }
 
 

@@ -8,6 +8,7 @@ CREATE TABLE user_profile
     age      INT            NOT NULL,
     activity VARCHAR(32)    NOT NULL,
     target   VARCHAR(32)    NOT NULL,
+    bot_case VARCHAR(64)    NOT NULL DEFAULT ('MAIN_MENU'),
     created  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id)

@@ -8,6 +8,7 @@ import ru.f0x.food.models.dto.users.Profile
 import ru.f0x.food.telegram.EVENT_FOOD_BUTTON_TEXT
 import ru.f0x.food.telegram.EVENT_WORKOUT_BUTTON_TEXT
 import ru.f0x.food.telegram.UserInfo
+import ru.f0x.food.telegram.buildKeyBoard
 
 @Suppress("UNCHECKED_CAST")
 @Component

@@ -10,6 +10,7 @@ import ru.f0x.food.services.users.IUserService
 import ru.f0x.food.telegram.ITelegramUserRegistrationStateRepository
 import ru.f0x.food.telegram.TelegramUserRegistrationState
 import ru.f0x.food.telegram.UserInfo
+import ru.f0x.food.telegram.mainMenu
 import java.util.*
 
 @Suppress("UNCHECKED_CAST")
@@ -30,14 +31,14 @@ class OnProfileConfirmationCase(
         val createUserProfileDTO = state.profile ?: return oops(state) as T
 
 
-        val result = userService.registerUser(
+        userService.registerUser(
                 CreateUserDTO(
                         password = UUID.randomUUID().toString(),
                         userInfo.userId.toString(),
                         createUserProfileDTO
                 )
         )
-        return SendMessage(userInfo.cid, HELLO_MESSAGE) as T
+        return mainMenu(userInfo.cid) as T
     }
 
     private fun oops(state: TelegramUserRegistrationState): SendMessage {

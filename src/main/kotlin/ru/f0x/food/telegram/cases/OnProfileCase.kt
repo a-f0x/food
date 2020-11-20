@@ -21,16 +21,6 @@ class OnProfileCase(private val repository: ITelegramUserRegistrationStateReposi
         private val weightRange = (40..170)
         private val activityRange = (1..5)
         private val targetRange = (1..3)
-        private const val NOT_ALL_PARAMETERS_PASSED = "Не все параметры переданы.\n$PROFILE_PATTERN"
-        private const val INVALID_NUMBER = "В параметре %s допустимо только число"
-        private const val INVALID_SEX = "Неверно указан пол. Допустимо только М или Ж"
-        private const val SHOULD_BE_BETWEEN_IN = "%s должен быть в диапазоне %d..%d"
-        private const val PROFILE_CONFIRMATION_MESSAGE = "Возраст - %d лет\n" +
-                "Рост - %s см\n" +
-                "Вес - %s кг\n" +
-                "Пол - %s \n" +
-                "Активность - %s \n" +
-                "Цель - %s"
 
 
     }
@@ -133,14 +123,6 @@ class OnProfileCase(private val repository: ITelegramUserRegistrationStateReposi
         ) as T
 
     }
-
-    private fun onNFE(param: String, cid: String) = SendMessage(cid, String.format(INVALID_NUMBER, param))
-
-    private fun shouldBeInRange(param: String, range: IntRange, cid: String) = SendMessage(
-            cid,
-            String.format(SHOULD_BE_BETWEEN_IN, param, range.first, range.last)
-    )
-
 
     private fun getSex(sex: String): SexEnum {
         return when (sex) {

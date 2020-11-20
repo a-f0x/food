@@ -1,5 +1,6 @@
 package ru.f0x.food.models.entity
 
+import ru.f0x.food.telegram.cases.CaseType
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -43,5 +44,9 @@ class UserProfileEntity {
 
     @Column(name = "modified", columnDefinition = "TIMESTAMP")
     open lateinit var modified: LocalDateTime
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bot_case", length = 64, nullable = false)
+    open var case: CaseType = CaseType.MAIN_MENU
 
 }

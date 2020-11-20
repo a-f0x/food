@@ -11,6 +11,10 @@ class CaseResolver(
         private val cases: Map<CaseType, ITelegramCase>,
         private val repo: ITelegramUserRegistrationStateRepository) {
 
+    private val continuedCases = mapOf(
+            CaseType.ADD_WORKOUT_EVENT to CaseType.ON_WORKOUT_KCAL_ENTERED
+    )
+
     private val messagesToCaseMap = mapOf(
             MAIN_MENU_MESSAGE_TEXT to CaseType.MAIN_MENU,
             MAIN_MENU_PROFILE_BUTTON_TEXT to CaseType.SHOW_PROFILE,
@@ -29,10 +33,24 @@ class CaseResolver(
 
 
     fun <T : BotApiMethod<BotApiObject>> getCase(userInfo: UserInfo, messageText: String?, profile: Profile): T? {
-        val type = messagesToCaseMap[messageText] ?: CaseType.MAIN_MENU
 
-        return getCase(type).process(userInfo, messageText, profile)
+        val fromMessage = resolveFromMessage(messageText)
+        if (fromMessage != null)
+            return getCase(fromMessage).process(userInfo, messageText, profile)
 
+        val next = getNextCaseFromContinued(profile.case)
+        if (next != null)
+            return getCase(next).process(userInfo, messageText, profile)
+        return getCase(CaseType.MAIN_MENU).process(userInfo, messageText, profile)
+
+    }
+
+    private fun resolveFromMessage(messageText: String?): CaseType? {
+        return messagesToCaseMap[messageText]
+    }
+
+    private fun getNextCaseFromContinued(current: CaseType): CaseType? {
+        return continuedCases[current]
     }
 
     private fun getCase(caseType: CaseType): ITelegramCase {
